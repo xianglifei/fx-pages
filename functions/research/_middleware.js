@@ -111,6 +111,13 @@ const NAV_HTML = `
 `;
 
 export async function onRequest(context) {
+  const url = new URL(context.request.url);
+  const pathname = url.pathname.replace(/\/+$/, '');
+
+  if (pathname === '/research' || pathname === '/research.html') {
+    return context.next();
+  }
+
   const response = await context.next();
   const contentType = response.headers.get('content-type') || '';
 
