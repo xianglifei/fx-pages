@@ -2,6 +2,10 @@
 
 ## 2026-06-26
 
+- 新增 `scripts/check-research-pages.js`，扫描 `research/*.html` 并阻止 `body` 上的非零 margin/padding 影响自动注入导航条贴顶显示。
+- 补充研究报告子页面布局规范：`body` 保持零间距，正文留白放在内部容器。
+- 修复 MiniMax 研究报告页面的 `body` padding，使自动注入导航条贴到页面最上方。
+
 - 调整研究报告导航注入逻辑，排除 `/research` 研究报告主页，仅对其下方子页面自动注入顶部导航条。
 - 新增 Cloudflare Pages Middleware，为 `research/` 目录下的 HTML 研究报告自动注入统一顶部导航条。
 - 将“研究报告”页面引用的飞书话题群和飞书讨论群二维码资源改为英文文件名，统一二维码资源命名并提升路径编码兼容性。

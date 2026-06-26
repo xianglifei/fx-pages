@@ -17,6 +17,7 @@
 ├── research.html    # 研究报告页面，展示飞书社群二维码
 ├── follow.html      # 关注我们页面，展示公众号 / 小红书入口与联系邮箱
 ├── functions/       # Cloudflare Pages Functions / Middleware，用于给研究报告页面注入导航
+├── scripts/         # 本地检查脚本，例如研究报告页面布局 guardrail
 ├── resources/       # 静态图片资源，例如二维码图片（页面直接引用的资源优先使用英文文件名）
 ├── CHANGELOG.md     # 变更记录
 └── .gitignore       # 本地忽略文件
@@ -58,6 +59,21 @@ Custom domain: feixing.io, www.feixing.io
    ```
 
 4. Cloudflare Pages 会自动从 GitHub 的 `main` 分支触发 Production 部署。
+
+## 研究报告页面规范
+
+`functions/research/_middleware.js` 会给 `research/` 目录下的 HTML 子页面自动注入统一顶部导航条。导航条会作为 `<body>` 的第一个子元素插入，因此研究报告子页面需要遵守以下布局规则：
+
+- `body` 只放全局字体、背景色、文字色等基础样式。
+- `body` 的 `margin` 和 `padding` 必须保持为 `0`。
+- 页面正文留白应放在 `.container`、`.page`、`.report` 等内部容器上。
+- 新增或修改研究报告后，运行：
+
+  ```bash
+  node scripts/check-research-pages.js
+  ```
+
+这个检查会扫描 `research/*.html`，防止页面自己的 `body` 间距把注入导航条从页面顶部推开。
 
 ## 本地预览
 
