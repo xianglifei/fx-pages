@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>港股复盘与下周展望 | 2026年6月26日</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f5f7fa; color:#1a1a2e; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+.container { max-width:960px; margin:0 auto; padding:20px 16px 60px; }
+
+/* Header */
+.header { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); color:#fff; border-radius:16px; padding:32px 28px; margin-bottom:20px; }
+.header h1 { font-size:24px; font-weight:700; margin-bottom:6px; }
+.header .sub { opacity:.7; font-size:14px; }
+.header .date-badge { display:inline-block; background:rgba(255,255,255,.15); border-radius:20px; padding:4px 14px; font-size:13px; margin-top:10px; }
+
+/* TL;DR Card */
+.tldr { background:#fff; border-radius:14px; padding:24px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.tldr h2 { font-size:16px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.tldr h2::before { content:''; width:4px; height:18px; background:#e74c3c; border-radius:2px; display:inline-block; }
+.tldr .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.tldr .grid .card { background:#f8f9fc; border-radius:10px; padding:16px; text-align:center; }
+.tldr .grid .card .num { font-size:28px; font-weight:700; }
+.tldr .grid .card .label { font-size:12px; color:#888; margin-top:4px; }
+.tldr .grid .card.red .num { color:#e74c3c; }
+.tldr .grid .card.green .num { color:#27ae60; }
+
+/* Section */
+.section { background:#fff; border-radius:14px; padding:24px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.section h2 { font-size:17px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.section h2 .icon { width:20px; height:20px; border-radius:4px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:12px; }
+.section h2 .icon.red { background:#e74c3c; }
+.section h2 .icon.blue { background:#3498db; }
+.section h2 .icon.green { background:#27ae60; }
+.section h2 .icon.orange { background:#f39c12; }
+
+.event-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0; align-items:flex-start; }
+.event-item:last-child { border-bottom:none; }
+.event-tag { flex-shrink:0; font-size:11px; padding:2px 8px; border-radius:10px; font-weight:600; min-width:40px; text-align:center; }
+.event-tag.positive { background:#e8f5e9; color:#27ae60; }
+.event-tag.negative { background:#ffebee; color:#e74c3c; }
+.event-tag.neutral { background:#f3f3f3; color:#888; }
+.event-content { flex:1; }
+.event-content .title { font-size:14px; font-weight:600; }
+.event-content .desc { font-size:13px; color:#666; margin-top:2px; }
+
+/* Probability wheel */
+.prob-container { display:flex; gap:16px; margin-top:12px; flex-wrap:wrap; }
+.prob-card { flex:1; min-width:180px; background:#f8f9fc; border-radius:12px; padding:20px 16px; text-align:center; position:relative; }
+.prob-card .prob-val { font-size:40px; font-weight:700; }
+.prob-card .prob-label { font-size:13px; color:#888; margin-top:4px; }
+.prob-card .prob-sub { font-size:12px; color:#999; margin-top:8px; border-top:1px solid #eee; padding-top:8px; }
+.prob-card.rebound { border-left:4px solid #27ae60; }
+.prob-card.rebound .prob-val { color:#27ae60; }
+.prob-card.continue { border-left:4px solid #e74c3c; }
+.prob-card.continue .prob-val { color:#e74c3c; }
+.prob-card.sideways { border-left:4px solid #f39c12; }
+.prob-card.sideways .prob-val { color:#f39c12; }
+
+/* Chart wrapper */
+.chart-box { width:100%; height:320px; margin:12px 0; }
+
+/* Score meter */
+.score-bar { display:flex; align-items:center; gap:10px; margin:8px 0; }
+.score-bar .score-label { width:100px; font-size:13px; font-weight:600; text-align:right; }
+.score-bar .bar-bg { flex:1; height:10px; background:#eee; border-radius:5px; overflow:hidden; }
+.score-bar .bar-fill { height:100%; border-radius:5px; transition:width .8s; }
+.score-bar .score-val { width:32px; font-size:12px; font-weight:700; text-align:left; }
+
+ul.bullet { padding-left:18px; }
+ul.bullet li { font-size:13.5px; line-height:1.7; color:#444; margin-bottom:4px; }
+
+.footer { text-align:center; font-size:12px; color:#aaa; margin-top:20px; padding-top:16px; border-top:1px solid #eee; }
+
+@media (max-width:640px) {
+  .tldr .grid { grid-template-columns:1fr 1fr; }
+  .prob-container { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>📉 港股复盘：黑色星期五</h1>
+  <div class="sub">恒指失守23000关口，亚太科技股集体暴跌</div>
+  <div class="date-badge">2026年6月26日（周五）· 收评</div>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <h2>关键数据</h2>
+  <div class="grid">
+    <div class="card red">
+      <div class="num">22,644</div>
+      <div class="label">恒生指数 · 跌1.87%</div>
+    </div>
+    <div class="card red">
+      <div class="num">4,260</div>
+      <div class="label">恒生科技指数 · 跌3.32%</div>
+    </div>
+    <div class="card red">
+      <div class="num">22,518</div>
+      <div class="label">日内最低点</div>
+    </div>
+    <div class="card red">
+      <div class="num">≈1,834亿</div>
+      <div class="label">早盘成交额（港元）</div>
+    </div>
+  </div>
+</div>
+
+<!-- 今日行情全景 -->
+<div class="section">
+  <h2><span class="icon red">今</span> 今日行情全景</h2>
+  <p style="font-size:13.5px;color:#444;line-height:1.7;margin-bottom:12px;">
+    今天是名副其实的"亚太黑色星期五"。亚太主要市场全线重挫：
+  </p>
+  <ul class="bullet">
+    <li><strong>🇰🇷 韩国KOSPI：暴跌8.18%</strong>，触发熔断停牌半小时，SK海力士跌9%、三星电子跌8%。这是6月23日以来第二次熔断。</li>
+    <li><strong>🇯🇵 日经225：跌约4.5%</strong>，软银跌13%（OpenAI IPO推迟至2027年），日经指数盘中一度跌超5%。</li>
+    <li><strong>🇭🇰 恒生指数：跌1.87%</strong>，报22,644点，恒生科技指数跌3.32%报4,260点，续创2025年1月以来新低。</li>
+    <li><strong>🇨🇳 A股：沪指盘中跌2.71%</strong>，深成指跌3.73%，全市场超4,500只个股下跌。</li>
+  </ul>
+</div>
+
+<!-- 下跌原因分析 -->
+<div class="section">
+  <h2><span class="icon red">因</span> 今日下跌三大直接导火索</h2>
+
+  <div class="event-item">
+    <span class="event-tag negative">导火索1</span>
+    <div class="event-content">
+      <div class="title">🍎 苹果产品涨价连锁反应</div>
+      <div class="desc">美光等存储芯片持续涨价，苹果拟将Mac/iPad售价最高上调300美元，微软Xbox同步涨价。市场猛然意识到——AI产业链不仅创造利润，也在抬升成本，终端需求能否承接形成严重担忧。港股舜宇光学跌超12%、中芯国际跌超6%。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag negative">导火索2</span>
+    <div class="event-content">
+      <div class="title">🤖 OpenAI IPO推迟至2027年</div>
+      <div class="desc">软银持有大量相关仓位，日股软银暴跌13%，拖累日经指数。情绪迅速传导至亚太科技板块，港股智谱跌超10%、MINIMAX跌逾8%。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag negative">导火索3</span>
+    <div class="event-content">
+      <div class="title">🏦 美国PCE超预期，美联储鹰派压制</div>
+      <div class="desc">6月25日公布的5月核心PCE同比升至3.4%（前值3.3%），强化美联储鹰派立场。美元强势，10年期美债收益率维持4.5%高位，全球资金回流美国，亚太成为"提款机"。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 更深层的结构性原因 -->
+<div class="section">
+  <h2><span class="icon orange">根</span> 港股持续疲弱的深层结构问题</h2>
+  <p style="font-size:13px;color:#666;margin-bottom:10px;">本轮下跌不是一次性的情绪冲击，而是四大结构性压力的集中释放。</p>
+
+  <div class="score-bar">
+    <span class="score-label">外资持续流出</span>
+    <div class="bar-bg"><div class="bar-fill" style="width:95%;background:#e74c3c;"></div></div>
+    <span class="score-val">🔴</span>
+  </div>
+  <p style="font-size:12.5px;color:#888;margin:-4px 0 8px 110px;">美债收益率4.5%吸引全球资金回流，港股作为离岸市场首当其冲</p>
+
+  <div class="score-bar">
+    <span class="score-label">IPO失血严重</span>
+    <div class="bar-bg"><div class="bar-fill" style="width:85%;background:#e74c3c;"></div></div>
+    <span class="score-val">🔴</span>
+  </div>
+  <p style="font-size:12.5px;color:#888;margin:-4px 0 8px 110px;">2025年IPO募资2,599亿港元(+228%)，2026年预计超3,000亿；今日6只新股同日上市抽血</p>
+
+  <div class="score-bar">
+    <span class="score-label">AI含量不足</span>
+    <div class="bar-bg"><div class="bar-fill" style="width:80%;background:#e74c3c;"></div></div>
+    <span class="score-val">🔴</span>
+  </div>
+  <p style="font-size:12.5px;color:#888;margin:-4px 0 8px 110px;">恒生科技可选消费占比43%，错失全球AI算力/半导体行情；A股科创板年内大涨，港科技持续新低</p>
+
+  <div class="score-bar">
+    <span class="score-label">南向资金抽离</span>
+    <div class="bar-bg"><div class="bar-fill" style="width:70%;background:#f39c12;"></div></div>
+    <span class="score-val">🟡</span>
+  </div>
+  <p style="font-size:12.5px;color:#888;margin:-4px 0 8px 110px;">6月25日南向资金净卖出88.74亿港元，公募基金港股持仓超标需调整</p>
+
+  <div class="score-bar">
+    <span class="score-label">负反馈循环</span>
+    <div class="bar-bg"><div class="bar-fill" style="width:90%;background:#e74c3c;"></div></div>
+    <span class="score-val">🔴</span>
+  </div>
+  <p style="font-size:12.5px;color:#888;margin:-4px 0 0 110px;">股价下跌→信心崩塌→资金出逃→进一步下跌，做空机制放大跌幅</p>
+</div>
+
+<!-- 周末关注事件 -->
+<div class="section">
+  <h2><span class="icon blue">周</span> 周末关注事件（6月27-28日）</h2>
+  <p style="font-size:13px;color:#666;margin-bottom:10px;">以下事件可能影响下周一开盘方向：</p>
+
+  <div class="event-item">
+    <span class="event-tag neutral">宏观数据</span>
+    <div class="event-content">
+      <div class="title">中国5月规模以上工业企业利润（周六6/27公布）</div>
+      <div class="desc">前值4月同比+24.7%表现强劲。若5月数据继续向好，将对周一港股早盘提供基本面支撑。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag neutral">美股夜盘</span>
+    <div class="event-content">
+      <div class="title">周五晚间美股走势 & 恒指夜期</div>
+      <div class="desc">周五晚美国交易时段（对应北京时间深夜至凌晨）将是周末最重要参考——若美股/中概股反弹，周一港股有望高开；若美股续跌，周一港股可能进一步承压。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag neutral">日本CPI</span>
+    <div class="event-content">
+      <div class="title">日本东京6月CPI（周五已公布）</div>
+      <div class="desc">市场预期核心CPI同比+1.6%。若超预期，日本央行加息预期升温→日元升值→套息交易减仓→可能继续压制亚太风险资产。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag neutral">地缘/政策</span>
+    <div class="event-content">
+      <div class="title">周末政策信号与地缘新闻</div>
+      <div class="desc">关注周末是否有利好政策出台（如国内稳增长、消费刺激措施）、中美关系信号、以及韩国/日本周末是否有稳定市场举措。</div>
+    </div>
+  </div>
+
+  <div class="event-item">
+    <span class="event-tag neutral">下周前瞻</span>
+    <div class="event-content">
+      <div class="title">下周一(6/29)事件提醒</div>
+      <div class="desc">关注7月1日香港回归纪念日前后的政策信号（港股7月1日休市一天）；下周也是6月底半年末，资金面偏紧。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 下周一走势概率 -->
+<div class="section">
+  <h2><span class="icon green">预</span> 下周一（6月29日）走势概率评估</h2>
+  <p style="font-size:13px;color:#666;margin-bottom:8px;">
+    综合多重因素，下周一港股走势的概率分布如下：
+  </p>
+
+  <div class="prob-container">
+    <div class="prob-card rebound">
+      <div class="prob-val">35%</div>
+      <div class="prob-label">技术性反弹（涨）</div>
+      <div class="prob-sub">
+        ✅ 持续下跌后的超卖反弹需求<br>
+        ✅ 估值已处历史低位（PB 2010年17%分位）<br>
+        ✅ 韩国/日本周末可能出台稳定措施<br>
+        ✅ 7月1日香港回归前政策维稳预期
+      </div>
+    </div>
+
+    <div class="prob-card continue">
+      <div class="prob-val">45%</div>
+      <div class="prob-label">继续下探（跌）</div>
+      <div class="prob-sub">
+        ❌ 趋势已破位，技术面偏空<br>
+        ❌ 美联储鹰派+美元强势不改<br>
+        ❌ 下半年解禁潮（1.57万亿港元）<br>
+        ❌ 南向资金持续流出<br>
+        ❌ 负反馈循环尚未打破
+      </div>
+    </div>
+
+    <div class="prob-card sideways">
+      <div class="prob-val">20%</div>
+      <div class="prob-label">横盘震荡</div>
+      <div class="prob-sub">
+        ➡️ 多空在22,000-22,800区间拉锯<br>
+        ➡️ 等待下周更多催化信号
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 技术面分析 -->
+<div class="section">
+  <h2><span class="icon red">技</span> 技术面分析</h2>
+  <div class="chart-box" id="chart-support"></div>
+  <p style="font-size:12.5px;color:#888;margin-top:8px;text-align:center;">* 示意图：恒生指数关键支撑与阻力位</p>
+
+  <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;">
+    <tr style="background:#f8f9fc;">
+      <th style="padding:8px 10px;text-align:left;border-bottom:2px solid #eee;">关键位置</th>
+      <th style="padding:8px 10px;text-align:right;border-bottom:2px solid #eee;">点位</th>
+      <th style="padding:8px 10px;text-align:left;border-bottom:2px solid #eee;">说明</th>
+    </tr>
+    <tr>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">🟢 强支撑</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:700;">22,000</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">2025年初低点附近，心理整数关口</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">🟢 次支撑</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:700;">21,600</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">2024年12月低点区域</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">🔴 短期阻力</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:700;">23,000</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #f0f0f0;">今日跌破的整数关口，现转为阻力</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 10px;">🔴 强阻力</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:700;">23,400</td>
+      <td style="padding:8px 10px;">6月22日以及6月密集成交区上沿</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 综合研判 -->
+<div class="section" style="border-left:4px solid #e74c3c;">
+  <h2><span class="icon red">判</span> 综合研判</h2>
+
+  <div style="background:#fff5f5;border-radius:10px;padding:16px;margin-bottom:12px;">
+    <p style="font-size:14px;font-weight:600;color:#c0392b;margin-bottom:6px;">⚠️ 核心判断：下周初大概率惯性下跌，但回调窗口接近</p>
+    <p style="font-size:13px;color:#555;line-height:1.7;">
+      今天（周五）的暴跌更像是"周五避险+亚太连锁熔断恐慌"的集中释放，在下半周已经连跌三日的背景下加速赶底。但从盘面看：
+    </p>
+  </div>
+
+  <p style="font-size:13.5px;color:#444;line-height:1.8;margin-bottom:8px;">
+    <strong>📉 下周一惯性下探概率偏大（45%），</strong>原因在于：
+  </p>
+  <ul class="bullet">
+    <li>趋势已经跌破23,000+22,800等关键支撑，空头占绝对主导地位</li>
+    <li>美联储PCE数据偏热导致降息预期进一步推迟，美元走强的逻辑短期内不会逆转</li>
+    <li>周末如果不出重大利好，周一早盘可能继续消化周五亚太恐慌情绪</li>
+    <li>6月末半年末资金面偏紧，南向资金持续外流</li>
+  </ul>
+
+  <p style="font-size:13.5px;color:#444;line-height:1.8;margin:14px 0 8px;">
+    <strong>📈 但技术性反弹概率也不低（35%），</strong>触发条件包括：
+  </p>
+  <ul class="bullet">
+    <li>周五跌幅已经很大，恒指期货夜盘收跌仅0.36%，说明盘后期货市场情绪有所稳定</li>
+    <li>恒生科技指数动态PE已低于均值一倍标准差，估值具备超跌修复基础</li>
+    <li>恒指PB处于2010年以来17%分位，属于历史极低区间</li>
+    <li>7月1日香港回归纪念日前夕，政策维稳预期可能提供短暂情绪支撑</li>
+    <li>若周五晚美股中概股企稳或反弹，将直接提振周一港股</li>
+  </ul>
+
+  <div style="background:#fef9e7;border-radius:10px;padding:14px;margin-top:14px;">
+    <p style="font-size:13px;color:#856404;line-height:1.7;">
+      <strong>💡 操作建议：</strong><br>
+      • 持有者：当前不宜恐慌割肉（估值底部区域），但建议设好止损位（如跌破22,000减仓）<br>
+      • 空仓者：等待22,000-22,200区间企稳信号（放量止跌+阳线确认）再考虑分批低吸<br>
+      • 关注方向：高股息防御资产（公用、电讯）、有业绩支撑的硬科技龙头<br>
+      • 注意：解禁潮+半年末+美联储转鹰三重压制下，反弹高度可能有限，22,800-23,000转为压力区
+    </p>
+  </div>
+</div>
+
+<!-- 本周走势回顾图 -->
+<div class="section">
+  <h2><span class="icon blue">周</span> 本周恒指走势回顾（6/22 - 6/26）</h2>
+  <div class="chart-box" id="chart-weekly"></div>
+  <p style="font-size:12.5px;color:#888;margin-top:8px;text-align:center;">* 根据公开数据模拟的本周恒生指数日K走势</p>
+</div>
+
+<div class="footer">
+  数据来源：东方财富、新浪财经、雪球、汇丰、格隆汇等 · 仅供参考，不构成投资建议<br>
+  制作于 2026年6月26日 15:46 HKT
+</div>
+
+</div>
+
+<script>
+// === 关键支撑/阻力位 ===
+echarts.init(document.getElementById('chart-support')).setOption({
+  tooltip: { trigger: 'axis' },
+  grid: { left: '8%', right: '8%', top: '12%', bottom: '16%' },
+  xAxis: {
+    type: 'category',
+    data: ['2025/10\n高点', '2026/1\n平台', '2026/3\n支撑', '2026/6/22\n前低', '2026/6/23\n二度探底', '2026/6/25\n三连跌', '2026/6/26\n黑色周五'],
+    axisLabel: { fontSize: 10, interval: 0, rotate: 30 }
+  },
+  yAxis: {
+    type: 'value',
+    min: 21500,
+    max: 28500,
+    splitLine: { lineStyle: { color: '#f0f0f0' } },
+    axisLabel: { formatter: '{value}' }
+  },
+  series: [
+    {
+      name: '恒生指数',
+      type: 'line',
+      smooth: true,
+      data: [28056, 26500, 25200, 23445, 23336, 23077, 22644],
+      lineStyle: { width: 3, color: '#3498db' },
+      symbol: 'circle', symbolSize: 8,
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(52,152,219,0.3)' }, { offset: 1, color: 'rgba(52,152,219,0.02)' }] } },
+      markLine: {
+        silent: true,
+        data: [
+          { yAxis: 23000, label: { formatter: '23,000 关口', color: '#e74c3c', fontSize: 11 }, lineStyle: { color: '#e74c3c', type: 'dashed' } },
+          { yAxis: 22000, label: { formatter: '22,000 下一支撑', color: '#27ae60', fontSize: 11 }, lineStyle: { color: '#27ae60', type: 'dashed' } },
+          { yAxis: 23400, label: { formatter: '23,400 阻力区', color: '#f39c12', fontSize: 11 }, lineStyle: { color: '#f39c12', type: 'dashed' } }
+        ]
+      }
+    }
+  ]
+});
+
+// === 本周日K线 ===
+echarts.init(document.getElementById('chart-weekly')).setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+  legend: { data: ['恒生指数', '恒生科技指数'] },
+  grid: { left: '8%', right: '5%', top: '14%', bottom: '12%' },
+  xAxis: {
+    type: 'category',
+    data: ['6/22(一)', '6/23(二)', '6/24(三)', '6/25(四)', '6/26(五)'],
+    axisLabel: { fontSize: 11 }
+  },
+  yAxis: [
+    { type: 'value', name: '恒指', min: 22000, splitLine: { lineStyle: { color: '#f0f0f0' } } },
+    { type: 'value', name: '恒科', min: 4000, splitLine: { show: false } }
+  ],
+  series: [
+    {
+      name: '恒生指数',
+      type: 'line',
+      symbol: 'circle', symbolSize: 6,
+      data: [
+        { value: 23850, itemStyle: { color: '#e74c3c' } },
+        { value: 23336, itemStyle: { color: '#e74c3c' } },
+        { value: 23450, itemStyle: { color: '#27ae60' } },
+        { value: 23077, itemStyle: { color: '#e74c3c' } },
+        { value: 22644, itemStyle: { color: '#e74c3c' } }
+      ],
+      lineStyle: { width: 2.5, color: '#3498db' },
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(52,152,219,0.2)' }, { offset: 1, color: 'rgba(52,152,219,0.02)' }] } }
+    },
+    {
+      name: '恒生科技指数',
+      type: 'line',
+      yAxisIndex: 1,
+      symbol: 'diamond', symbolSize: 6,
+      data: [
+        { value: 4600, itemStyle: { color: '#e74c3c' } },
+        { value: 4399, itemStyle: { color: '#e74c3c' } },
+        { value: 4430, itemStyle: { color: '#27ae60' } },
+        { value: 4406, itemStyle: { color: '#e74c3c' } },
+        { value: 4260, itemStyle: { color: '#e74c3c' } }
+      ],
+      lineStyle: { width: 2, color: '#e67e22' }
+    }
+  ]
+});
+</script>
+
+</body>
+</html>
