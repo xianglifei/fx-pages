@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飞行无界 - AI Native 投资研究</title>
+    <title>关注我们 - 飞行无界</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -59,6 +59,7 @@
             position: absolute;
             pointer-events: none;
             z-index: 0;
+            opacity: 0.82;
         }
 
         .cloud svg {
@@ -111,6 +112,14 @@
             gap: 10px;
         }
 
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: inherit;
+            text-decoration: none;
+        }
+
         .brand-mark {
             display: inline-flex;
             align-items: center;
@@ -150,49 +159,29 @@
             transition: color 0.2s;
         }
 
-        .nav-link:hover {
+        .nav-link:hover,
+        .nav-link.active {
             color: #2563EB;
         }
 
-        .nav-cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 24px;
-            background: #2563EB;
-            color: #FFFFFF;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 9999px;
-            transition: background 0.2s;
-        }
-
-        .nav-cta:hover {
-            background: #1D4ED8;
-        }
-
-        /* Main Content */
-        .main-content {
+        /* Article Content */
+        .article-wrap {
             position: relative;
             z-index: 5;
             flex: 1;
-            width: min(100%, 1360px);
+            width: min(100%, 960px);
             margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(32px, 4.5vw, 64px);
-            padding: clamp(24px, 4vh, 48px) clamp(32px, 4.5vw, 64px) clamp(32px, 5vh, 56px);
-        }
-
-        /* Left Content */
-        .left-content {
-            flex: 1;
+            padding: clamp(36px, 6vh, 72px) clamp(32px, 4.5vw, 64px) clamp(48px, 8vh, 96px);
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            max-width: 688px;
+            gap: 32px;
+        }
+
+        .article-hero {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 760px;
         }
 
         .eyebrow-badge {
@@ -226,7 +215,7 @@
             letter-spacing: 1.2px;
         }
 
-        .headline {
+        .article-title {
             font-size: clamp(40px, 3.6vw, 52px);
             font-weight: 800;
             color: #1E293B;
@@ -234,193 +223,208 @@
             letter-spacing: -1.5px;
         }
 
-        .subheadline {
-            font-size: 18px;
-            font-weight: 400;
-            color: #64748B;
-            line-height: 28px;
+        .article-summary {
+            max-width: 680px;
+            font-size: clamp(24px, 2.4vw, 32px);
+            font-weight: 800;
+            color: #1E293B;
+            line-height: 1.28;
+            letter-spacing: -0.6px;
         }
 
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 28px;
-            background: #2563EB;
-            color: #FFFFFF;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
-            transition: all 0.2s;
-            width: fit-content;
-        }
-
-        .cta-button:hover {
-            background: #1D4ED8;
-            box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
-            transform: translateY(-1px);
-        }
-
-        /* Right Terminal Window */
-        .terminal-column {
-            width: clamp(420px, 38vw, 560px);
-            flex-shrink: 1;
-        }
-
-        .terminal-window {
+        .article-card {
             background: #FFFFFF;
             border: 1px solid #E2E8F0;
             border-radius: 16px;
-            overflow: hidden;
             box-shadow: 0 12px 32px rgba(37, 99, 235, 0.08);
+            padding: clamp(28px, 4vw, 48px);
         }
 
-        .terminal-header {
-            display: flex;
+        .notice-kicker {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            background: #F8FAFC;
-            border-bottom: 1px solid #E2E8F0;
-        }
-
-        .traffic-lights {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .traffic-light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .traffic-light.red { background: #FF5F57; }
-        .traffic-light.yellow { background: #FEBC2E; }
-        .traffic-light.green { background: #28C840; }
-
-        .terminal-title {
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748B;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #28C840;
-            box-shadow: 0 0 6px rgba(40, 200, 64, 0.6);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .live-text {
-            font-size: 11px;
-            font-weight: 700;
-            color: #28C840;
-            letter-spacing: 0.5px;
-        }
-
-        .terminal-body {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            font-family: 'Plus Jakarta Sans', monospace;
-        }
-
-        .term-line {
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .term-cmd {
-            font-weight: 500;
-            color: #2563EB;
-        }
-
-        .term-output {
-            font-weight: 400;
-            color: #64748B;
-        }
-
-        .term-divider {
-            height: 1px;
-            background: #E2E8F0;
-            margin: 4px 0;
-        }
-
-        .term-header-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #94A3B8;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-
-        .signal-box {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .signal-line {
-            font-size: 12px;
-            font-weight: 400;
-            color: #1E293B;
-        }
-
-        .term-summary {
-            font-size: 13px;
-            font-weight: 600;
+            padding: 6px 12px;
+            margin-bottom: 18px;
+            border-radius: 9999px;
+            background: rgba(234, 88, 12, 0.08);
             color: #EA580C;
-        }
-
-        .term-cursor {
             font-size: 13px;
-            font-weight: 400;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+
+        .article-card h2 {
+            font-size: clamp(24px, 2.4vw, 32px);
+            line-height: 1.28;
+            color: #1E293B;
+            letter-spacing: -0.6px;
+            margin-bottom: 18px;
+        }
+
+        .article-card p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #475569;
+        }
+
+        .article-card p + p {
+            margin-top: 14px;
+        }
+
+        .highlight-line {
+            margin-top: 22px;
+            padding: 16px 18px;
+            border-radius: 12px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            color: #1E293B;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .qr-section {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .qr-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+        }
+
+        .qr-label {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1E293B;
+            letter-spacing: -0.2px;
+        }
+
+        .qr-caption {
+            margin-top: 10px;
+            color: #64748B;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .qr-placeholder {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+            height: 180px;
+            margin: 18px auto 2px;
+            border: 2px dashed #CBD5E1;
+            border-radius: 14px;
+            background:
+                linear-gradient(90deg, rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+                #F1F5F9;
+            background-size: 18px 18px;
+            color: #94A3B8;
+            overflow: hidden;
+        }
+
+        .qr-placeholder::before,
+        .qr-placeholder::after {
+            content: "";
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border: 8px solid rgba(37, 99, 235, 0.22);
+            border-radius: 8px;
+        }
+
+        .qr-placeholder::before {
+            top: 18px;
+            left: 18px;
+        }
+
+        .qr-placeholder::after {
+            right: 18px;
+            bottom: 18px;
+        }
+
+        .qr-placeholder-text {
+            position: relative;
+            z-index: 1;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid #E2E8F0;
+            color: #64748B;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .qr-image {
+            display: block;
+            width: 180px;
+            height: 180px;
+            margin: 18px auto 2px;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .contact-panel {
+            margin-top: 18px;
+            padding: 24px;
+            border-radius: 16px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+
+        .contact-intro {
+            margin-top: 24px;
+        }
+
+        .contact-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748B;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            margin-top: 10px;
             color: #2563EB;
+            font-size: clamp(22px, 2.8vw, 32px);
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            text-decoration: none;
         }
 
-        .cursor-blink {
-            display: inline-block;
-            width: 7px;
-            height: 14px;
-            background: #2563EB;
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
+        .contact-email:hover {
+            color: #1D4ED8;
         }
 
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+        .contact-copy {
+            margin-top: 8px;
+            color: #64748B;
+            font-size: 14px;
+            line-height: 1.7;
         }
 
-        /* Responsive */
-        @media (max-width: 1360px) {
-            .main-content {
-                width: min(100%, 1280px);
-            }
-        }
-
-        @media (max-width: 1280px) {
-            .main-content {
-                width: min(100%, 1160px);
-            }
-
-            .left-content {
-                max-width: 620px;
-            }
+        .article-footer-note {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #E2E8F0;
+            color: #94A3B8;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         @media (max-width: 1024px) {
@@ -429,21 +433,9 @@
                 overflow-x: hidden;
             }
 
-            .main-content {
-                flex-direction: column;
-                align-items: stretch;
-                justify-content: flex-start;
+            .article-wrap {
                 width: 100%;
-                padding: 24px 32px 48px 32px;
-            }
-
-            .left-content {
-                max-width: 688px;
-            }
-
-            .terminal-column {
-                width: 100%;
-                max-width: 560px;
+                padding: 32px 32px 64px;
             }
         }
 
@@ -461,25 +453,22 @@
                 font-size: 14px;
             }
 
-            .main-content {
+            .article-wrap {
                 gap: 28px;
-                justify-content: center;
-                padding: 0 20px 72px 20px;
+                padding: 24px 20px 72px;
             }
 
-            .left-content {
-                flex: 0 1 auto;
-                max-width: 100%;
-                gap: 24px;
+            .article-hero {
+                gap: 18px;
             }
 
-            .headline {
+            .article-title {
                 font-size: 32px;
                 line-height: 40px;
                 letter-spacing: -0.8px;
             }
 
-            .subheadline {
+            .article-summary {
                 font-size: 16px;
                 line-height: 26px;
             }
@@ -488,8 +477,8 @@
                 letter-spacing: 0.8px;
             }
 
-            .terminal-column {
-                display: none;
+            .qr-section {
+                grid-template-columns: 1fr;
             }
 
             .cloud-large {
@@ -527,12 +516,8 @@
                 display: none;
             }
 
-            .nav-cta {
-                padding: 9px 18px;
-            }
-
-            .main-content {
-                padding-top: 0;
+            .article-wrap {
+                padding-top: 18px;
                 padding-bottom: 84px;
             }
 
@@ -544,13 +529,23 @@
                 font-size: 11px;
             }
 
-            .headline {
+            .article-title {
                 font-size: 28px;
                 line-height: 36px;
             }
 
-            .cta-button {
-                width: 100%;
+            .article-card {
+                padding: 24px 18px;
+            }
+
+            .qr-card {
+                padding: 22px 16px;
+            }
+
+            .qr-placeholder,
+            .qr-image {
+                width: 164px;
+                height: 164px;
             }
         }
     </style>
@@ -570,7 +565,7 @@
                     </filter>
                 </defs>
                 <g filter="url(#blur-large)">
-                    <ellipse cx="200" cy="138" cx_r="176" rx="176" ry="24" fill="#BFD9FF" opacity="0.9" />
+                    <ellipse cx="200" cy="138" rx="176" ry="24" fill="#BFD9FF" opacity="0.9" />
                     <ellipse cx="100" cy="111" rx="46" ry="38" fill="#CFE3FF" opacity="1" />
                     <ellipse cx="147" cy="83" rx="63" ry="52" fill="#CFE3FF" opacity="1" />
                     <ellipse cx="214" cy="69" rx="67" ry="55" fill="#E0EAFF" opacity="1" />
@@ -636,68 +631,62 @@
         <!-- Top Navigation -->
         <nav class="top-nav">
             <div class="nav-left">
-                <span class="brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 12.5L20 4L15.5 20L11.8 13.7L4 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-                        <path d="M12 13.5L20 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                    </svg>
-                </span>
-                <span class="brand-name">飞行无界</span>
+                <a href="index.html" class="brand-link" aria-label="返回首页">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 12.5L20 4L15.5 20L11.8 13.7L4 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                            <path d="M12 13.5L20 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        </svg>
+                    </span>
+                    <span class="brand-name">飞行无界</span>
+                </a>
             </div>
             <div class="nav-right">
                 <a href="research.html" class="nav-link">研究报告</a>
-                <a href="follow.html" class="nav-link">关注我们</a>
+                <a href="follow.html" class="nav-link active" aria-current="page">关注我们</a>
             </div>
         </nav>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Left Content -->
-            <div class="left-content">
+        <!-- Article Content -->
+        <main class="article-wrap">
+            <section class="article-hero" aria-labelledby="page-title">
                 <div class="eyebrow-badge">
                     <span class="pulse-dot"></span>
-                    <span class="eyebrow-text">AI NATIVE INVESTMENT RESEARCH</span>
+                    <span class="eyebrow-text">FOLLOW US</span>
                 </div>
-                <h1 class="headline">让研究更深，让投资更准</h1>
-                <p class="subheadline">由互联网人组建的 AI Native 研究型投资机构，以大模型与量化引擎为底座，聚焦 AI 与半导体赛道，以数据驱动的深度研究持续获取超额收益。</p>
-                <a href="research.html" class="cta-button">查看研究报告 →</a>
-            </div>
+                <h1 class="article-title" id="page-title">关注我们</h1>
+                <p class="article-summary">扫码关注微信公众号与小红书</p>
+            </section>
 
-            <!-- Right Terminal Window -->
-            <div class="terminal-column">
-                <div class="terminal-window">
-                    <!-- Terminal Header -->
-                    <div class="terminal-header">
-                        <div class="traffic-lights">
-                            <span class="traffic-light red"></span>
-                            <span class="traffic-light yellow"></span>
-                            <span class="traffic-light green"></span>
-                        </div>
-                        <span class="terminal-title">fx-research ~ /engine</span>
-                        <div class="status-indicator">
-                            <span class="live-dot"></span>
-                            <span class="live-text">LIVE</span>
-                        </div>
-                    </div>
-                    <!-- Terminal Body -->
-                    <div class="terminal-body">
-                        <div class="term-line term-cmd">$ fx --analyze --sector=AI-infra --depth=full</div>
-                        <div class="term-line term-output">▸ Initializing research engine v3.2.1 ...</div>
-                        <div class="term-line term-output">▸ Scanning 1,247 companies across 18 sub-sectors</div>
-                        <div class="term-line term-output">▸ LLM processing 2.3M patents + 8.7K papers</div>
-                        <div class="term-divider"></div>
-                        <div class="term-header-label">TOP CONVICTION SIGNALS</div>
-                        <div class="signal-box">
-                            <div class="signal-line">✓ NVIDIA (NVDA) · AI Compute · 92%</div>
-                            <div class="signal-line">✓ Micron (MU) · HBM Cycle · 87%</div>
-                            <div class="signal-line">✓ TSMC (TSM) · Foundry Capacity · 84%</div>
-                        </div>
-                        <div class="term-divider"></div>
-                        <div class="term-line term-summary">▸ 3 signals / 1,247 scanned · Alpha +18.4% (YTD) · Sharpe 2.1</div>
-                        <div class="term-line term-cursor">$ <span class="cursor-blink"></span></div>
-                    </div>
+            <article class="article-card">
+                <p>我们会在公众号与小红书持续同步飞行无界的研究观察、行业洞察与活动信息，帮助你更及时地了解 AI、半导体与算力产业链的关键变化。</p>
+
+                <div class="highlight-line">
+                    欢迎扫码关注微信公众号与小红书，获取研究更新、行业洞察与活动信息。
                 </div>
-            </div>
+
+                <div class="qr-section" aria-label="关注我们二维码">
+                    <section class="qr-card">
+                        <h3 class="qr-label">微信公众号</h3>
+                        <img class="qr-image" src="resources/微信公众号_永久_仅二维码.png" alt="微信公众号二维码" width="180" height="180">
+                        <p class="qr-caption">关注研究文章、深度报告摘要与飞行无界最新动态。</p>
+                    </section>
+
+                    <section class="qr-card">
+                        <h3 class="qr-label">小红书</h3>
+                        <img class="qr-image" src="resources/小红书_永久_仅二维码.png" alt="小红书二维码" width="180" height="180">
+                        <p class="qr-caption">查看轻量化研究笔记、图文观点与社群活动更新。</p>
+                    </section>
+                </div>
+
+                <p class="contact-intro">如果你希望进一步交流研究合作、内容转载、商务合作或其他问题，也欢迎直接通过邮箱联系我们。</p>
+
+                <section class="contact-panel" aria-labelledby="contact-title">
+                    <div class="contact-label" id="contact-title">Direct Contact</div>
+                    <a class="contact-email" href="mailto:talk@feixing.io">talk@feixing.io</a>
+                    <p class="contact-copy">欢迎发送合作、采访、研究交流与反馈建议，我们会尽快回复。</p>
+                </section>
+            </article>
         </main>
     </div>
 </body>
