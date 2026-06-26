@@ -16,6 +16,7 @@
 ├── index.html       # 官网首页，包含 HTML、CSS 和页面内容
 ├── research.html    # 研究报告页面，展示飞书社群二维码
 ├── follow.html      # 关注我们页面，展示公众号 / 小红书入口与联系邮箱
+├── functions/       # Cloudflare Pages Functions / Middleware，用于给研究报告页面注入导航
 ├── resources/       # 静态图片资源，例如二维码图片（页面直接引用的资源优先使用英文文件名）
 ├── CHANGELOG.md     # 变更记录
 └── .gitignore       # 本地忽略文件
