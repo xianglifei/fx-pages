@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股「七姐妹」涨跌幅报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f7f8fc;color:#1a1a2e;padding:24px}
+.container{max-width:1200px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;padding:32px 40px;border-radius:16px;margin-bottom:24px}
+.header h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.header .sub{font-size:14px;color:#a0a8c0}
+.header .time{font-size:13px;color:#7a82a0;margin-top:6px}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.summary-card{background:#fff;border-radius:12px;padding:20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.summary-card .num{font-size:28px;font-weight:700;margin-bottom:4px}
+.summary-card .label{font-size:13px;color:#7a82a0}
+.summary-card .up{color:#e74c3c}
+.summary-card .down{color:#27ae60}
+.chart-wrap{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.chart-wrap h2{font-size:18px;font-weight:600;margin-bottom:16px;color:#1a1a2e}
+.chart-box{width:100%;height:420px}
+.table-wrap{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:12px 10px;text-align:center;border-bottom:1px solid #eee}
+th{background:#f0f2f8;font-weight:600;color:#555}
+tr:hover{background:#f8f9ff}
+td:first-child{text-align:left;font-weight:600}
+.up{color:#e74c3c;font-weight:600}
+.down{color:#27ae60;font-weight:600}
+.neutral{color:#666}
+.footer{text-align:center;padding:16px;color:#7a82a0;font-size:13px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>🚀 美股「七姐妹」涨跌幅全景</h1>
+<div class="sub">Magnificent Seven — 各周期表现对比</div>
+<div class="time">数据截止：2026-06-25 美股收盘 | 注：🇨🇳 红色 = 涨，绿色 = 跌</div>
+</div>
+
+<div class="summary-grid" id="summaryGrid"></div>
+
+<div class="chart-wrap">
+<h2>📊 七姐妹各周期涨跌幅对比</h2>
+<div class="chart-box" id="chartAll"></div>
+</div>
+
+<div class="chart-wrap">
+<h2>📈 年初至今（YTD）涨跌幅排名</h2>
+<div class="chart-box" id="chartYTD"></div>
+</div>
+
+<div class="chart-wrap">
+<h2>📉 近3个月涨跌幅排名</h2>
+<div class="chart-box" id="chart3M"></div>
+</div>
+
+<div class="table-wrap">
+<h2>📋 详细数据表</h2>
+<table>
+<thead>
+<tr><th>股票</th><th>代码</th><th>最新价($)</th><th>年初至今</th><th>过去6个月</th><th>过去3个月</th><th>过去1个月</th></tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+
+<div class="footer">
+数据来源：腾讯自选股（westock-data） | 生成时间：2026-06-26 19:52 CST
+</div>
+
+</div>
+
+<script>
+var stocks = [
+  {name:'苹果', code:'AAPL', price:275.15, ytd:1.39, m6:0.82, m3:8.90, m1:-10.76},
+  {name:'微软', code:'MSFT', price:352.83, ytd:-26.72, m6:-27.33, m3:-3.38, m1:-15.19},
+  {name:'谷歌', code:'GOOGL', price:343.71, ytd:9.95, m6:9.78, m3:22.43, m1:-11.56},
+  {name:'亚马逊', code:'AMZN', price:227.01, ytd:-1.65, m6:-2.37, m3:9.38, m1:-14.43},
+  {name:'英伟达', code:'NVDA', price:195.74, ytd:5.09, m6:2.87, m3:14.44, m1:-8.79},
+  {name:'Meta', code:'META', price:542.87, ytd:-17.61, m6:-18.01, m3:-0.76, m1:-11.26},
+  {name:'特斯拉', code:'TSLA', price:375.12, ytd:-16.58, m6:-21.06, m3:0.81, m1:-13.49}
+];
+
+// Summary cards
+var s = document.getElementById('summaryGrid');
+var upCount = stocks.filter(function(d){return d.ytd>0}).length;
+var downCount = 7 - upCount;
+var avgYtd = (stocks.reduce(function(a,b){return a+b.ytd},0)/7).toFixed(1);
+var best = stocks.reduce(function(a,b){return a.ytd>b.ytd?a:b});
+var worst = stocks.reduce(function(a,b){return a.ytd<b.ytd?a:b});
+var cards = [
+  {n:upCount+'涨 / '+downCount+'跌', l:'YTD上涨/下跌家数', c:''},
+  {n:avgYtd+'%', l:'YTD平均涨跌幅', c:avgYtd>0?'up':'down'},
+  {n:best.name+' +'+best.ytd.toFixed(1)+'%', l:'YTD涨幅最高', c:'up'},
+  {n:worst.name+' '+worst.ytd.toFixed(1)+'%', l:'YTD跌幅最大', c:'down'}
+];
+cards.forEach(function(c){
+  s.innerHTML += '<div class="summary-card"><div class="num '+(c.c||'')+'">'+c.n+'</div><div class="label">'+c.l+'</div></div>';
+});
+
+function fmt(v) {
+  var cls = v>0?'up':(v<0?'down':'neutral');
+  return '<span class="'+cls+'">'+(v>0?'+':'')+v.toFixed(2)+'%</span>';
+}
+
+// Table
+var tb = document.getElementById('tbody');
+stocks.forEach(function(d){
+  tb.innerHTML += '<tr><td>'+d.name+'</td><td>'+d.code+'</td><td>$'+d.price.toFixed(2)+'</td><td>'+fmt(d.ytd)+'</td><td>'+fmt(d.m6)+'</td><td>'+fmt(d.m3)+'</td><td>'+fmt(d.m1)+'</td></tr>';
+});
+
+var names = stocks.map(function(d){return d.name});
+var ytd = stocks.map(function(d){return d.ytd});
+var m6 = stocks.map(function(d){return d.m6});
+var m3 = stocks.map(function(d){return d.m3});
+var m1 = stocks.map(function(d){return d.m1});
+
+// Chart 1: All periods comparison (grouped bar)
+var chartAll = echarts.init(document.getElementById('chartAll'));
+chartAll.setOption({
+  tooltip: {trigger:'axis', axisPointer:{type:'shadow'}},
+  legend: {data:['年初至今','过去6个月','过去3个月','过去1个月'], top:0},
+  grid: {left:60, right:30, top:60, bottom:40},
+  xAxis: {type:'category', data:names, axisLabel:{fontSize:12}},
+  yAxis: {type:'value', name:'涨跌幅(%)', axisLabel:{formatter:'{value}%'}},
+  series: [
+    {name:'年初至今', type:'bar', barGap:'10%', data:ytd.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}}})},
+    {name:'过去6个月', type:'bar', barGap:'10%', data:m6.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}}})},
+    {name:'过去3个月', type:'bar', barGap:'10%', data:m3.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}}})},
+    {name:'过去1个月', type:'bar', barGap:'10%', data:m1.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}}})}
+  ]
+});
+
+// Chart 2: YTD ranking (horizontal bar)
+var sortedYtd = stocks.slice().sort(function(a,b){return b.ytd-a.ytd});
+var chartYTD = echarts.init(document.getElementById('chartYTD'));
+chartYTD.setOption({
+  tooltip: {trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}<br/>YTD: {c}%'},
+  grid: {left:80, right:40, top:20, bottom:20},
+  xAxis: {type:'value', name:'涨跌幅(%)', axisLabel:{formatter:'{value}%'}},
+  yAxis: {type:'category', data:sortedYtd.map(function(d){return d.name}), axisLabel:{fontSize:13}},
+  series: [{
+    type:'bar', barWidth:'55%',
+    data:sortedYtd.map(function(d){return {value:d.ytd, itemStyle:{color:d.ytd>=0?'#e74c3c':'#27ae60', borderRadius:d.ytd>=0?[0,4,4,0]:[4,0,0,4]}}})
+  }]
+});
+
+// Chart 3: 3M ranking (horizontal bar)
+var sorted3m = stocks.slice().sort(function(a,b){return b.m3-a.m3});
+var chart3M = echarts.init(document.getElementById('chart3M'));
+chart3M.setOption({
+  tooltip: {trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}<br/>近3月: {c}%'},
+  grid: {left:80, right:40, top:20, bottom:20},
+  xAxis: {type:'value', name:'涨跌幅(%)', axisLabel:{formatter:'{value}%'}},
+  yAxis: {type:'category', data:sorted3m.map(function(d){return d.name}), axisLabel:{fontSize:13}},
+  series: [{
+    type:'bar', barWidth:'55%',
+    data:sorted3m.map(function(d){return {value:d.m3, itemStyle:{color:d.m3>=0?'#e74c3c':'#27ae60', borderRadius:d.m3>=0?[0,4,4,0]:[4,0,0,4]}}})
+  }]
+});
+
+window.addEventListener('resize', function(){
+  chartAll.resize();
+  chartYTD.resize();
+  chart3M.resize();
+});
+</script>
+
+</body>
+</html>
