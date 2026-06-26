@@ -13,9 +13,12 @@
 
 ```text
 .
-├── index.html      # 官网首页，包含 HTML、CSS 和页面内容
-├── CHANGELOG.md    # 变更记录
-└── .gitignore      # 本地忽略文件
+├── index.html       # 官网首页，包含 HTML、CSS 和页面内容
+├── research.html    # 研究报告页面，展示飞书社群二维码
+├── follow.html      # 关注我们页面，展示公众号 / 小红书入口与联系邮箱
+├── resources/       # 静态图片资源，例如二维码图片
+├── CHANGELOG.md     # 变更记录
+└── .gitignore       # 本地忽略文件
 ```
 
 当前项目是纯静态页面，不需要安装依赖，也不需要构建步骤。
@@ -39,7 +42,7 @@ Custom domain: feixing.io, www.feixing.io
 
 发布流程：
 
-1. 在本地修改 `index.html` 或其他静态文件。
+1. 在本地修改 `index.html`、`research.html`、`follow.html` 或其他静态文件。
 2. 提交到 Git：
 
    ```bash
