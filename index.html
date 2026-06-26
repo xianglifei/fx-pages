@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞行无界 - AI Native 投资研究</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8FAFC;
+        }
+
+        .page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: #F8FAFC;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background Decorative Circles */
+        .bg-circle-1 {
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, rgba(37, 99, 235, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-circle-2 {
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.04) 0%, rgba(234, 88, 12, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Cloud Elements */
+        .cloud {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cloud svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cloud-large {
+            top: -30px;
+            right: -30px;
+            width: 420px;
+            height: 180px;
+        }
+
+        .cloud-medium {
+            bottom: 50px;
+            left: -70px;
+            width: 300px;
+            height: 130px;
+        }
+
+        .cloud-small {
+            top: 20px;
+            left: 48%;
+            width: 200px;
+            height: 90px;
+        }
+
+        .cloud-tiny {
+            top: 48%;
+            right: 60px;
+            width: 170px;
+            height: 75px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(16px, 2.2vw, 20px) clamp(32px, 4.5vw, 64px);
+            min-height: 72px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            color: #2563EB;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(96, 165, 250, 0.18) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.16);
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+        }
+
+        .brand-mark svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1E293B;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: #64748B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #2563EB;
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 24px;
+            background: #2563EB;
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 9999px;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: #1D4ED8;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            width: min(100%, 1280px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(32px, 4.5vw, 64px);
+            padding: clamp(24px, 4vh, 48px) clamp(32px, 4.5vw, 64px) clamp(32px, 5vh, 56px);
+        }
+
+        /* Left Content */
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            max-width: 688px;
+        }
+
+        .eyebrow-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 9999px;
+            width: fit-content;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2563EB;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .eyebrow-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2563EB;
+            letter-spacing: 1.2px;
+        }
+
+        .headline {
+            font-size: clamp(40px, 3.6vw, 52px);
+            font-weight: 800;
+            color: #1E293B;
+            line-height: 1.18;
+            letter-spacing: -1.5px;
+        }
+
+        .subheadline {
+            font-size: 18px;
+            font-weight: 400;
+            color: #64748B;
+            line-height: 28px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            background: #2563EB;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s;
+            width: fit-content;
+        }
+
+        .cta-button:hover {
+            background: #1D4ED8;
+            box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
+        }
+
+        /* Right Terminal Window */
+        .terminal-column {
+            width: clamp(420px, 38vw, 560px);
+            flex-shrink: 1;
+        }
+
+        .terminal-window {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(37, 99, 235, 0.08);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: #F8FAFC;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .traffic-lights {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .traffic-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .traffic-light.red { background: #FF5F57; }
+        .traffic-light.yellow { background: #FEBC2E; }
+        .traffic-light.green { background: #28C840; }
+
+        .terminal-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748B;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28C840;
+            box-shadow: 0 0 6px rgba(40, 200, 64, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .live-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #28C840;
+            letter-spacing: 0.5px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-family: 'Plus Jakarta Sans', monospace;
+        }
+
+        .term-line {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .term-cmd {
+            font-weight: 500;
+            color: #2563EB;
+        }
+
+        .term-output {
+            font-weight: 400;
+            color: #64748B;
+        }
+
+        .term-divider {
+            height: 1px;
+            background: #E2E8F0;
+            margin: 4px 0;
+        }
+
+        .term-header-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #94A3B8;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .signal-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .signal-line {
+            font-size: 12px;
+            font-weight: 400;
+            color: #1E293B;
+        }
+
+        .term-summary {
+            font-size: 13px;
+            font-weight: 600;
+            color: #EA580C;
+        }
+
+        .term-cursor {
+            font-size: 13px;
+            font-weight: 400;
+            color: #2563EB;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 7px;
+            height: 14px;
+            background: #2563EB;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1280px) {
+            .main-content {
+                width: min(100%, 1160px);
+            }
+
+            .left-content {
+                max-width: 620px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .page {
+                overflow: visible;
+                overflow-x: hidden;
+            }
+
+            .main-content {
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+                width: 100%;
+                padding: 24px 32px 48px 32px;
+            }
+
+            .left-content {
+                max-width: 688px;
+            }
+
+            .terminal-column {
+                width: 100%;
+                max-width: 560px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                height: auto;
+                padding: 16px 20px;
+            }
+
+            .nav-right {
+                gap: 16px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+            }
+
+            .main-content {
+                gap: 28px;
+                justify-content: center;
+                padding: 0 20px 72px 20px;
+            }
+
+            .left-content {
+                flex: 0 1 auto;
+                max-width: 100%;
+                gap: 24px;
+            }
+
+            .headline {
+                font-size: 32px;
+                line-height: 40px;
+                letter-spacing: -0.8px;
+            }
+
+            .subheadline {
+                font-size: 16px;
+                line-height: 26px;
+            }
+
+            .eyebrow-text {
+                letter-spacing: 0.8px;
+            }
+
+            .terminal-column {
+                display: none;
+            }
+
+            .cloud-large {
+                top: -24px;
+                right: -80px;
+                width: 280px;
+                height: 120px;
+            }
+
+            .cloud-medium {
+                bottom: 24px;
+                left: -80px;
+                width: 200px;
+                height: 86px;
+            }
+
+            .cloud-small {
+                top: 86px;
+                left: auto;
+                right: 34px;
+                width: 140px;
+                height: 63px;
+            }
+
+            .cloud-tiny {
+                top: 58%;
+                right: -28px;
+                width: 120px;
+                height: 53px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                display: none;
+            }
+
+            .nav-cta {
+                padding: 9px 18px;
+            }
+
+            .main-content {
+                padding-top: 0;
+                padding-bottom: 84px;
+            }
+
+            .eyebrow-badge {
+                padding: 7px 12px;
+            }
+
+            .eyebrow-text {
+                font-size: 11px;
+            }
+
+            .headline {
+                font-size: 28px;
+                line-height: 36px;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Background Decorative Circles -->
+        <div class="bg-circle-1"></div>
+        <div class="bg-circle-2"></div>
+
+        <!-- Cloud Elements (SVG with Gaussian Blur) -->
+        <div class="cloud cloud-large">
+            <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="blur-large">
+                        <feGaussianBlur stdDeviation="8" />
+                    </filter>
+                </defs>
+                <g filter="url(#blur-large)">
+                    <ellipse cx="200" cy="138" cx_r="176" rx="176" ry="24" fill="#BFD9FF" opacity="0.9" />
+                    <ellipse cx="100" cy="111" rx="46" ry="38" fill="#CFE3FF" opacity="1" />
+                    <ellipse cx="147" cy="83" rx="63" ry="52" fill="#CFE3FF" opacity="1" />
+                    <ellipse cx="214" cy="69" rx="67" ry="55" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="281" cy="80" rx="59" ry="48" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="332" cy="97" rx="46" ry="38" fill="#F0F5FF" opacity="1" />
+                    <ellipse cx="370" cy="114" rx="34" ry="28" fill="#F0F5FF" opacity="1" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="cloud cloud-medium">
+            <svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="blur-medium">
+                        <feGaussianBlur stdDeviation="6" />
+                    </filter>
+                </defs>
+                <g filter="url(#blur-medium)">
+                    <ellipse cx="150" cy="101" rx="125" ry="18" fill="#BFD9FF" opacity="0.9" />
+                    <ellipse cx="67" cy="79" rx="33" ry="29" fill="#CFE3FF" opacity="1" />
+                    <ellipse cx="109" cy="58" rx="46" ry="40" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="167" cy="47" rx="50" ry="43" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="225" cy="58" rx="42" ry="36" fill="#F0F5FF" opacity="1" />
+                    <ellipse cx="258" cy="72" rx="29" ry="25" fill="#F0F5FF" opacity="1" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="cloud cloud-small">
+            <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="blur-small">
+                        <feGaussianBlur stdDeviation="5" />
+                    </filter>
+                </defs>
+                <g filter="url(#blur-small)">
+                    <ellipse cx="100" cy="68" rx="83" ry="14" fill="#BFD9FF" opacity="0.9" />
+                    <ellipse cx="46" cy="49" rx="23" ry="21" fill="#CFE3FF" opacity="1" />
+                    <ellipse cx="75" cy="34" rx="32" ry="29" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="117" cy="27" rx="35" ry="32" fill="#F0F5FF" opacity="1" />
+                    <ellipse cx="154" cy="38" rx="27" ry="24" fill="#F0F5FF" opacity="1" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="cloud cloud-tiny">
+            <svg viewBox="0 0 170 75" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="blur-tiny">
+                        <feGaussianBlur stdDeviation="4" />
+                    </filter>
+                </defs>
+                <g filter="url(#blur-tiny)">
+                    <ellipse cx="85" cy="56" rx="68" ry="11" fill="#BFD9FF" opacity="0.9" />
+                    <ellipse cx="38" cy="41" rx="19" ry="17" fill="#CFE3FF" opacity="1" />
+                    <ellipse cx="64" cy="29" rx="26" ry="23" fill="#E0EAFF" opacity="1" />
+                    <ellipse cx="98" cy="23" rx="27" ry="24" fill="#F0F5FF" opacity="1" />
+                    <ellipse cx="128" cy="31" rx="21" ry="19" fill="#F0F5FF" opacity="1" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 12.5L20 4L15.5 20L11.8 13.7L4 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M12 13.5L20 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </span>
+                <span class="brand-name">飞行无界</span>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-link">研究报告</a>
+                <a href="#" class="nav-link">关于我们</a>
+                <a href="#" class="nav-cta">联系我们</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Content -->
+            <div class="left-content">
+                <div class="eyebrow-badge">
+                    <span class="pulse-dot"></span>
+                    <span class="eyebrow-text">AI NATIVE INVESTMENT RESEARCH</span>
+                </div>
+                <h1 class="headline">让研究更深，让投资更准</h1>
+                <p class="subheadline">由互联网人组建的 AI Native 研究型投资机构，以大模型与量化引擎为底座，聚焦 AI 与半导体赛道，以数据驱动的深度研究持续获取超额收益。</p>
+                <a href="#" class="cta-button">查看研究报告 →</a>
+            </div>
+
+            <!-- Right Terminal Window -->
+            <div class="terminal-column">
+                <div class="terminal-window">
+                    <!-- Terminal Header -->
+                    <div class="terminal-header">
+                        <div class="traffic-lights">
+                            <span class="traffic-light red"></span>
+                            <span class="traffic-light yellow"></span>
+                            <span class="traffic-light green"></span>
+                        </div>
+                        <span class="terminal-title">fx-research ~ /engine</span>
+                        <div class="status-indicator">
+                            <span class="live-dot"></span>
+                            <span class="live-text">LIVE</span>
+                        </div>
+                    </div>
+                    <!-- Terminal Body -->
+                    <div class="terminal-body">
+                        <div class="term-line term-cmd">$ fx --analyze --sector=AI-infra --depth=full</div>
+                        <div class="term-line term-output">▸ Initializing research engine v3.2.1 ...</div>
+                        <div class="term-line term-output">▸ Scanning 1,247 companies across 18 sub-sectors</div>
+                        <div class="term-line term-output">▸ LLM processing 2.3M patents + 8.7K papers</div>
+                        <div class="term-divider"></div>
+                        <div class="term-header-label">TOP CONVICTION SIGNALS</div>
+                        <div class="signal-box">
+                            <div class="signal-line">✓ NeuroScale AI · Series C · 92%</div>
+                            <div class="signal-line">✓ QuantumForge · Series B · 87%</div>
+                            <div class="signal-line">✓ DeepRoot Labs · Pre-A · 81%</div>
+                        </div>
+                        <div class="term-divider"></div>
+                        <div class="term-line term-summary">▸ 3 signals / 1,247 scanned · Alpha +18.4% (YTD) · Sharpe 2.1</div>
+                        <div class="term-line term-cursor">$ <span class="cursor-blink"></span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
