@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minimax (00100.HK) 做空工具全解析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f7fa; color: #1a1a2e; line-height: 1.7; padding: 24px; }
+.container { max-width: 960px; margin: 0 auto; }
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.header h1 { font-size: 26px; margin-bottom: 8px; }
+.header .subtitle { opacity: 0.8; font-size: 14px; }
+.header .price-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; margin-top: 12px; font-size: 13px; }
+.warning-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; color: #e65100; }
+.section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.section h2 { font-size: 18px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; color: #1a1a2e; }
+.section h3 { font-size: 15px; margin: 16px 0 10px; color: #333; }
+.section p, .section li { font-size: 14px; color: #444; margin-bottom: 8px; }
+.tool-card { background: #f8f9fc; border-radius: 10px; padding: 18px; margin-bottom: 14px; border: 1px solid #eef0f5; }
+.tool-card .tool-name { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
+.tool-card .tool-name .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+.tag-available { background: #e8f5e9; color: #2e7d32; }
+.tag-limited { background: #fff3e0; color: #e65100; }
+.tag-unavailable { background: #fbe9e7; color: #c62828; }
+.tool-card .detail-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
+.tool-card .detail-row .label { color: #888; }
+.tool-card .detail-row .value { color: #333; font-weight: 500; }
+.pros-cons { display: flex; gap: 12px; margin-top: 8px; }
+.pros, .cons { flex: 1; font-size: 13px; }
+.pros { color: #2e7d32; }
+.cons { color: #c62828; }
+.chart-container { height: 360px; margin: 16px 0; }
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e0e0e0; }
+.timeline-item { position: relative; margin-bottom: 20px; padding-left: 16px; }
+.timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #1a1a2e; border: 2px solid white; box-shadow: 0 0 0 2px #1a1a2e; }
+.timeline-item .date { font-weight: 600; color: #1a1a2e; font-size: 14px; }
+.timeline-item .desc { font-size: 13px; color: #666; margin-top: 2px; }
+.timeline-item.red::before { background: #c62828; box-shadow: 0 0 0 2px #c62828; }
+.timeline-item.green::before { background: #2e7d32; box-shadow: 0 0 0 2px #2e7d32; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.compare-table th { background: #f0f2f5; padding: 10px 12px; text-align: left; font-weight: 600; }
+.compare-table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+.compare-table tr:hover td { background: #f8f9fc; }
+.star-rating { color: #f5a623; }
+.footer { text-align: center; font-size: 12px; color: #999; padding: 20px 0; }
+@media (max-width: 600px) { body { padding: 12px; } .header { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>📉 Minimax (00100.HK) 做空工具全景分析</h1>
+  <div class="subtitle">基于 2026 年 6 月 26 日市场数据 · 实时编制</div>
+  <div class="price-badge">
+    最新价: <strong>~415.4 港元</strong> (⬇ 9%) · 今日低点 411.2 · 较 1330 历史高点回撤 68.8%
+  </div>
+</div>
+
+<div class="warning-box">
+  ⚠️ <strong>高风险声明：</strong>做空操作风险极高，理论上亏损无上限（股价可无限上涨）。以下分析仅供信息参考，不构成投资建议。Minimax 作为高波动 AI 新股，做空工具匮乏，间接做空策略存在较大误差。请务必评估自身风险承受能力后再做决策。
+</div>
+
+<!-- 股价走势图 -->
+<div class="section">
+  <h2>📈 走势回顾：从千元 AI 明星到腰斩再腰斩</h2>
+  <div id="priceChart" class="chart-container"></div>
+  <div style="font-size: 12px; color: #999; text-align: center;">关键节点：1/9 IPO 165HK$ → 3月峰值 1330HK$ → 6/26 约 415HK$</div>
+</div>
+
+<!-- 解禁时间线 -->
+<div class="section">
+  <h2>🔓 解禁时间线：真正的供给冲击即将到来</h2>
+  <div class="timeline">
+    <div class="timeline-item green">
+      <div class="date">2026年1月9日 — IPO 上市</div>
+      <div class="desc">发行价 165 港元，IPO 仅发行 2538.9 万股（占总股本 ~8%），流通盘极小</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2026年1月-3月 — 做多行情</div>
+      <div class="desc">AI 稀缺标的，流通盘小资金推动，3 月触及 1330 港元历史高点，市值 ~3800 亿港元</div>
+    </div>
+    <div class="timeline-item red">
+      <div class="date">2026年6月 — 提前暴跌</div>
+      <div class="desc">市场提前反映解禁预期，叠加 AI 板块回调，股价从 962 → 415，单月腰斩</div>
+    </div>
+    <div class="timeline-item red" style="font-weight: 600;">
+      <div class="date">🚨 2026年7月9日 — 首批大规模解禁</div>
+      <div class="desc">
+        <strong>解禁比例：约 46%~63% 股份（汇丰/中金数据）</strong><br>
+        涉及：基石投资者、阿里巴巴、米哈游等 Pre-IPO 股东<br>
+        ⚡ 阿里和米哈游已表态"长期持有"，但财务型投资者（占 1/3 以上）有较大减持动力<br>
+        当前流通盘仅 ~5%，解禁后将带来巨大流动性冲击
+      </div>
+    </div>
+    <div class="timeline-item red">
+      <div class="date">2026年8月底-10月初 — 第二轮解禁 ~12%</div>
+      <div class="desc">部分现有股东锁定期到期</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2027年1月 — 创始团队自愿锁定到期 ~8%</div>
+      <div class="desc">创始团队 12 个月自愿禁售期结束</div>
+    </div>
+  </div>
+</div>
+
+<!-- 做空工具总览 -->
+<div class="section">
+  <h2>🔧 做空工具总览：选择非常有限</h2>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ① 直接融券做空
+      <span class="tag tag-limited">理论上可行</span>
+    </div>
+    <p>向券商借入 Minimax 股票卖出，待下跌后买回归还。</p>
+    <div class="detail-row"><span class="label">可行性</span><span class="value">⚠️ 需有港股融券资格的券商 + 可借出的库存</span></div>
+    <div class="detail-row"><span class="label">预期成本</span><span class="value">年化 8%~15%+（新股/高波动标的借贷费率极高）</span></div>
+    <div class="detail-row"><span class="label">门槛</span><span class="value">港股券商融券账户，通常需 50 万-100 万港币以上资产</span></div>
+    <div class="detail-row"><span class="label">流动性风险</span><span class="value">高 — 流通盘小，借券供给可能不足</span></div>
+    <div class="detail-row"><span class="label">强制平仓风险</span><span class="value">中等 — 反弹至融券保证金线可能被追保/强平</span></div>
+    <div class="pros-cons">
+      <div class="pros">✅ 直接暴露敞口，方向最精准</div>
+      <div class="cons">❌ 成本高、门槛高、存在无券可借风险；亏损理论上无限</div>
+    </div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ② 熊证 (Bear CBBC)
+      <span class="tag tag-unavailable">❌ 目前无产品</span>
+    </div>
+    <p>在恒生/汇丰/法兴/瑞银等主要发行商搜索结果显示：<strong>当前没有任何发行商为 Minimax (00100) 发行熊证产品。</strong></p>
+    <div class="detail-row"><span class="label">原因</span><span class="value">发行商需对冲成本；MiniMax 波动率极高（30天历史波幅 156%），做市风险过大</span></div>
+    <div class="detail-row"><span class="label">未来可能</span><span class="value">待股价稳定 / 波动率下降后，发行商可能陆续推出，但 7 月解禁前新增可能性低</span></div>
+    <div class="pros-cons">
+      <div class="pros">✅ 若推出，杠杆高（3-8倍）、投资门槛低、风险有限（最多亏本金）</div>
+      <div class="cons">❌ 目前完全不可用</div>
+    </div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ③ 认沽证 (Put Warrant)
+      <span class="tag tag-unavailable">❌ 目前无产品</span>
+    </div>
+    <p>在恒生/汇丰等主要发行商搜索结果显示：<strong>当前没有任何发行商为 Minimax 发行认沽证产品。</strong></p>
+    <div class="detail-row"><span class="label">原因</span><span class="value">与熊证类似，高波动 + 新上市导致做市商不愿承担风险</span></div>
+    <div class="pros-cons">
+      <div class="pros">✅ 若推出，杠杆高（2-5倍）、最大损失为权利金</div>
+      <div class="cons">❌ 目前完全不可用</div>
+    </div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ④ 股票期权 (Stock Options)
+      <span class="tag tag-unavailable">❌ 尚未推出</span>
+    </div>
+    <p>港交所股票期权名单中尚未包含 00100。通常新股上市 3-6 个月后才可能纳入，且需满足市值/流动性门槛。</p>
+    <div class="detail-row"><span class="label">现状</span><span class="value">港交所上市股票期权中暂无 00100</span></div>
+    <div class="detail-row"><span class="label">预期</span><span class="value">短期上市可能性较低（波动率过高，做市商兴趣不足）</span></div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ⑤ 间接做空 — 恒生科技指数 (HSTECH) 熊证/认沽证
+      <span class="tag tag-available">✅ 可用</span>
+    </div>
+    <p>Minimax 是恒生科技指数成份股，做空 HSTECH 可以获得对包括 Minimax 在内的一篮子科技股的做空敞口。但精确度较低。</p>
+    <div class="detail-row"><span class="label">工具</span><span class="value">恒生科技指数熊证 / 认沽证（选择极多）</span></div>
+    <div class="detail-row"><span class="label">相关性</span><span class="value">低-Medium — Minimax 在恒科指中的权重未知，一般 AI 新股权重不超过 3-5%</span></div>
+    <div class="detail-row"><span class="label">举例</span><span class="value">可在汇丰/法兴/瑞银等网站搜索 "HSTECH 熊证" 选择合适杠杆的产品</span></div>
+    <div class="pros-cons">
+      <div class="pros">✅ 产品丰富、流动性好、门槛低、最大损失有限</div>
+      <div class="cons">❌ 敞口极度不精确，仅做空 Minimax 完全不是好选择</div>
+    </div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-name">
+      ⑥ 差价合约 (CFD) — 场外衍生品
+      <span class="tag tag-available">✅ 可用（需特定平台）</span>
+    </div>
+    <p>部分国际券商/CFD 平台（如 IG、Saxo、Phillip Capital 等）可能提供 00100 的差价合约做空服务。</p>
+    <div class="detail-row"><span class="label">杠杆</span><span class="value">通常 2-20 倍（取决于平台和标的）</span></div>
+    <div class="detail-row"><span class="label">成本</span><span class="value">隔夜融资费（类似融券利息）+ 点差</span></div>
+    <div class="detail-row"><span class="label">门槛</span><span class="true">开通 CFD 账户（需为专业投资者或符合条件）</span></div>
+    <div class="detail-row"><span class="label">风险</span><span class="true">极端 — CFD 杠杆高，且场外交易缺乏透明度，平台风险需警惕</span></div>
+    <div class="pros-cons">
+      <div class="pros">✅ 新上市标的通常也有产品、杠杆可调、无借券问题</div>
+      <div class="cons">❌ 需海外账户、杠杆加速亏损、隔夜成本累积、平台信用风险</div>
+    </div>
+  </div>
+</div>
+
+<!-- 策略对比表 -->
+<div class="section">
+  <h2>📊 做空策略对比</h2>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>策略</th>
+        <th>可行性</th>
+        <th>门槛</th>
+        <th>成本</th>
+        <th>精确度</th>
+        <th>推荐度 *</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>融券做空</td>
+        <td>⚠️ 有条件可行</td>
+        <td>🔴 高</td>
+        <td>🔴 高</td>
+        <td>🟢 精确</td>
+        <td>⭐⭐</td>
+      </tr>
+      <tr>
+        <td>熊证/认沽证</td>
+        <td>🔴 不可用</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>恒科指熊证（间接）</td>
+        <td>🟢 丰富</td>
+        <td>🟢 低</td>
+        <td>🟢 低</td>
+        <td>🔴 极差</td>
+        <td>⭐</td>
+      </tr>
+      <tr>
+        <td>CFD 做空</td>
+        <td>🟢 有平台支持</td>
+        <td>🟡 中</td>
+        <td>🟡 中-高</td>
+        <td>🟢 精确</td>
+        <td>⭐⭐⭐</td>
+      </tr>
+      <tr>
+        <td>做多反向标的（配对）</td>
+        <td>🟢 做多智谱</td>
+        <td>🟡 中</td>
+        <td>🟡 中</td>
+        <td>🟡 行业对冲</td>
+        <td>⭐⭐⭐</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size: 12px; color: #999; margin-top: 8px;">* 推荐度综合考虑可行性、精确度和成本，非收益预期</div>
+</div>
+
+<!-- 配对交易策略 -->
+<div class="section">
+  <h2>🔄 值得一提：AI 大模型「多空配对交易」</h2>
+  <p>市场最近出现一个有趣的对冲策略——做多智谱（02513.HK）+ 做空 Minimax：</p>
+  <ul>
+    <li><strong>智谱</strong>：自 3 月底以来累计上涨 ~170%，市场共识销售预期持续上调</li>
+    <li><strong>Minimax</strong>：同期跌幅约 50%，盈利前景不确定 + 解禁压力</li>
+    <li><strong>效果</strong>：双向对冲 AI 板块系统性风险，只暴露两者相对强弱</li>
+  </ul>
+  <p style="margin-top: 8px; font-size: 13px; color: #666;">
+    💡 但问题同上：Minimax 做空工具匮乏，若无法融券，配对策略也难以执行。
+  </p>
+</div>
+
+<!-- 实操建议 -->
+<div class="section">
+  <h2>🎯 实操建议：如果你确实想做空 Minimax</h2>
+  <div style="background: #e3f2fd; padding: 16px 20px; border-radius: 8px; margin-bottom: 16px;">
+    <strong>优先级排序：</strong>
+  </div>
+  <ol style="padding-left: 20px;">
+    <li><strong>首选：CFD 差价合约</strong>（如 IG、Saxo 等平台）— 精确做空、门槛适中，是当前最可行方案。缺点是需离岸账户，注意平台风险。</li>
+    <li style="margin-top: 8px;"><strong>次选：融券做空</strong> — 联系具备港股融券资格的券商（如辉立、耀才、IB 等），询问是否有 00100 可借出库存及利息成本。注意 7 月解禁前借贷利率可能飙升。</li>
+    <li style="margin-top: 8px;"><strong>备选：配对交易</strong> — 做多智谱 + 做空 Minimax（若能融券），对冲 AI 板块风险。</li>
+    <li style="margin-top: 8px;"><strong>不推荐：恒科指熊证</strong> — 敞口太不精确，Minimax 跌 10% 恒科指可能只跌 0.5%，失去做空意义。</li>
+  </ol>
+</div>
+
+<!-- 风险提示 -->
+<div class="section" style="border: 2px solid #c62828;">
+  <h2>🚨 做空 Minimax 的特殊风险</h2>
+  <ol style="padding-left: 20px;">
+    <li><strong>流通盘极小（~5%）</strong>：股价可能被少量资金操纵出现"轧空"（Short Squeeze），空头在极端情况下可能被迫在高位平仓</li>
+    <li style="margin-top: 6px;"><strong>波动率极端（30天历史波幅 156%）</strong>：意味着单日涨跌 10-20% 是常态，做空仓位极易被穿仓</li>
+    <li style="margin-top: 6px;"><strong>阿里/米哈游表态长期持有</strong>：虽然不能锁定全部，但两大战略股东不减持会减少一部分抛压</li>
+    <li style="margin-top: 6px;"><strong>AI 行业催化剂</strong>：如果 7 月前出现 AI 行业重大利好（如政策、技术突破），空头将面临严重挤压</li>
+    <li style="margin-top: 6px;"><strong>做空工具匮乏本身就是信号</strong>：发行商不愿为 00100 出熊证/认沽证，恰恰说明标的做市风险过高</li>
+    <li style="margin-top: 6px;"><strong>时间成本</strong>：融券/CFD 都有隔夜利息，如果解禁后股价横盘不跌，利息将不断侵蚀本金</li>
+  </ol>
+</div>
+
+<div class="footer">
+  数据来源：港交所、新浪财经、富途牛牛、汇丰轮证、恒生牛熊证超级市场、公开新闻报道<br>
+  报告生成时间：2026-06-26 11:47 HKT · 信息仅供参考，不构成投资建议
+</div>
+
+</div>
+
+<script>
+const chart = echarts.init(document.getElementById('priceChart'));
+chart.setOption({
+  tooltip: { trigger: 'axis', formatter: function(p) {
+    const d = p[0];
+    return d.axisValue + '<br/>' + d.marker + ' ' + d.value.toLocaleString() + ' 港元';
+  }},
+  grid: { left: 60, right: 20, top: 20, bottom: 30 },
+  xAxis: {
+    type: 'category',
+    data: ['25/1/9\nIPO', '1月', '2月', '3月\n峰值', '4月', '5月', '6/11\n腰斩', '6/23\n再暴跌', '6/26\n今天'],
+    axisLabel: { fontSize: 11, interval: 0 },
+    axisLine: { lineStyle: { color: '#ddd' } }
+  },
+  yAxis: {
+    type: 'value',
+    min: 0,
+    max: 1400,
+    splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
+    axisLabel: { formatter: '{value}', fontSize: 11 }
+  },
+  series: [{
+    type: 'line',
+    data: [165, 320, 680, 1330, 962, 700, 435, 515, 415],
+    smooth: true,
+    lineStyle: { color: '#c62828', width: 3 },
+    areaStyle: {
+      color: {
+        type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+        colorStops: [
+          { offset: 0, color: 'rgba(198,40,40,0.3)' },
+          { offset: 1, color: 'rgba(198,40,40,0.02)' }
+        ]
+      }
+    },
+    symbol: 'circle',
+    symbolSize: 8,
+    itemStyle: {
+      color: function(p) {
+        const vals = [165, 320, 680, 1330, 962, 700, 435, 515, 415];
+        return p.dataIndex === 3 ? '#c62828' : (p.dataIndex === 8 ? '#d32f2f' : '#1a1a2e');
+      },
+      borderWidth: 2,
+      borderColor: 'white'
+    },
+    markPoint: {
+      data: [
+        { coord: ['3月\n峰值', 1330], symbolSize: 50, label: { formatter: '1330\n峰值', fontSize: 11, color: '#c62828', fontWeight: 'bold' } },
+        { coord: ['6/26\n今天', 415], symbolSize: 50, label: { formatter: '415\n现在', fontSize: 11, color: '#1a1a2e', fontWeight: 'bold' } }
+      ],
+      symbol: 'circle'
+    },
+    markLine: {
+      silent: true,
+      data: [
+        { xAxis: '3月\n峰值', label: { formatter: '', fontSize: 0 }, lineStyle: { color: '#c62828', type: 'dashed', opacity: 0.3 } },
+        { yAxis: 165, label: { formatter: 'IPO 165', fontSize: 11, color: '#666' }, lineStyle: { color: '#999', type: 'dashed', opacity: 0.4 } }
+      ]
+    }
+  }]
+});
+window.addEventListener('resize', function() { chart.resize(); });
+</script>
+
+</body>
+</html>
