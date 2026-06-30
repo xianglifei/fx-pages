@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>达势股份(01405.HK)深度研究 — 2026年6月30日</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  background: #f5f5f5; 
+  font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
+  color: #1a1a2e; line-height: 1.7; font-size: 15px;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 20px 16px; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white; border-radius: 12px; padding: 40px 36px; margin-bottom: 24px;
+}
+.header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { font-size: 15px; color: #a0b4d6; margin-bottom: 20px; }
+.header .meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: #8899bb; }
+.header .meta span { background: rgba(255,255,255,0.08); padding: 4px 12px; border-radius: 20px; }
+
+/* TL;DR Card */
+.tldr {
+  background: #e8f4fd; border-left: 4px solid #1a73e8; border-radius: 8px;
+  padding: 20px 24px; margin-bottom: 24px;
+}
+.tldr h2 { font-size: 16px; color: #1a73e8; margin-bottom: 8px; }
+.tldr p { font-size: 14px; color: #1a1a2e; margin-bottom: 6px; }
+.tldr .score { display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
+.tldr .score-item { text-align: center; min-width: 100px; }
+.tldr .score-item .num { font-size: 28px; font-weight: 700; }
+.tldr .score-item .label { font-size: 12px; color: #666; margin-top: 2px; }
+.positive { color: #e74c3c; } /* Chinese convention: red = up/good */
+.negative { color: #27ae60; } /* Chinese convention: green = down/bad */
+.neutral { color: #f39c12; }
+
+/* Section */
+.section { 
+  background: white; border-radius: 10px; padding: 24px; margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.section h2 { 
+  font-size: 18px; font-weight: 700; margin-bottom: 16px; 
+  padding-bottom: 10px; border-bottom: 2px solid #eef0f4;
+}
+.section h3 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: #2c3e50; }
+.section p { font-size: 14px; margin-bottom: 10px; color: #333; }
+.section ul { padding-left: 18px; margin-bottom: 10px; }
+.section li { font-size: 14px; margin-bottom: 6px; color: #333; }
+
+/* Key metrics grid */
+.metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.metric-card {
+  background: #f8f9fc; border-radius: 8px; padding: 14px;
+  border: 1px solid #eef0f4;
+}
+.metric-card .label { font-size: 12px; color: #889; margin-bottom: 4px; }
+.metric-card .value { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+.metric-card .sub { font-size: 12px; color: #999; margin-top: 2px; }
+
+/* Chart container */
+.chart-box { width: 100%; height: 380px; margin-bottom: 16px; }
+
+/* Risk tag */
+.tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; margin-right: 6px; margin-bottom: 4px; }
+.tag-high { background: #ffe0e0; color: #c0392b; }
+.tag-mid { background: #fff3cd; color: #856404; }
+.tag-low { background: #d4edda; color: #155724; }
+
+/* Comparison table */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.comp-table th { background: #f0f2f5; padding: 10px 12px; text-align: center; font-weight: 600; border-bottom: 2px solid #ddd; }
+.comp-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #eee; }
+.comp-table tr:hover td { background: #f8f9ff; }
+.comp-table .highlight { background: #fffde7; }
+
+/* Signal box */
+.signal-box {
+  display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0;
+}
+.signal {
+  flex: 1; min-width: 200px; padding: 16px; border-radius: 8px; 
+  border: 1px solid #e0e0e0;
+}
+.signal.bull { border-left: 4px solid #e74c3c; }
+.signal.bear { border-left: 4px solid #27ae60; }
+.signal h4 { font-size: 14px; margin-bottom: 8px; }
+.signal li { font-size: 13px; margin-bottom: 4px; }
+
+/* Footer */
+.footer { text-align: center; font-size: 12px; color: #999; padding: 20px; }
+.footer a { color: #1a73e8; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>🍕 达势股份 (01405.HK) 深度研究</h1>
+  <div class="subtitle">达美乐中国 — 从"高增长故事"到"价值陷阱"，股价暴跌75%后是否还有机会？</div>
+  <div class="meta">
+    <span>📅 2026年6月30日</span>
+    <span>🏷️ 港股 | 餐饮 | 消费</span>
+    <span>📊 当前价: HKD 29.46</span>
+    <span>🏙️ 52周高: HKD 107.3</span>
+    <span>📉 YTD: -58.88%</span>
+  </div>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <h2>⚡ TL;DR — 一句话结论</h2>
+  <p><strong>达势股份的核心矛盾已从"成长性"转为"盈利兑现能力"。</strong> 股价从2025年高点暴跌约72%后（HKD 107→29），0.75倍市销率已隐含了充分悲观预期。但2025年同店销售下滑1.5%、净利率仅2.6%、特许经营权2027年到期的组合，让估值修复难以自发发生。</p>
+  <p><strong>短期：</strong> 向下空间可能有限（P/S已接近DMP等问题样本），但缺乏明确催化——需要看到同店销售转正、消费复苏或续约信号。</p>
+  <p><strong>中期：</strong> 真正的机会取决于"开店驱动增长→同店+利润率双提升"的过渡是否顺利。若能证明净利率从3.5%稳定爬升到5%+，当前P/S存在重估空间。</p>
+  <div class="score">
+    <div class="score-item"><div class="num negative">⚠️</div><div class="label">短期判断(3-6月)</div></div>
+    <div class="score-item"><div class="num positive">🔍</div><div class="label">中期判断(1-2年)</div></div>
+    <div class="score-item"><div class="num neutral">❓</div><div class="label">核心变量</div></div>
+  </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="section">
+  <h2>📊 核心数据一览</h2>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="label">当前股价</div><div class="value negative">HKD 29.46</div><div class="sub">⬇ 较52周高 -72.5%</div></div>
+    <div class="metric-card"><div class="label">总市值</div><div class="value">HKD 38.8亿</div><div class="sub">约 RMB 33.5亿</div></div>
+    <div class="metric-card"><div class="label">PE TTM</div><div class="value">24.7x</div><div class="sub">年初曾达72.7x</div></div>
+    <div class="metric-card"><div class="label">PB</div><div class="value">1.44x</div><div class="sub">资产端</div></div>
+    <div class="metric-card"><div class="label">P/S (TTM)</div><div class="value negative">0.75x</div><div class="sub">接近历史最低</div></div>
+    <div class="metric-card"><div class="label">2025营收</div><div class="value positive">RMB 53.82亿</div><div class="sub">+24.8% YoY</div></div>
+    <div class="metric-card"><div class="label">归母净利润</div><div class="value positive">RMB 1.42亿</div><div class="sub">+157% YoY</div></div>
+    <div class="metric-card"><div class="label">经调整净利率</div><div class="value neutral">3.5%</div><div class="sub">2024年: 3.0%</div></div>
+    <div class="metric-card"><div class="label">门店数</div><div class="value positive">1,462家</div><div class="sub">Q1 2026末; 72城</div></div>
+    <div class="metric-card"><div class="label">同店销售增长</div><div class="value negative">-1.5%</div><div class="sub">2025全年</div></div>
+    <div class="metric-card"><div class="label">单店日均销售</div><div class="value negative">RMB 12,428</div><div class="sub">⬇ 5.3% YoY</div></div>
+    <div class="metric-card"><div class="label">YTD涨幅(股价)</div><div class="value negative">-58.9%</div><div class="sub">2026年至今</div></div>
+  </div>
+</div>
+
+<!-- Stock Price Chart -->
+<div class="section">
+  <h2>📈 股价走势 — 从"百元股"到30港元</h2>
+  <div id="priceChart" class="chart-box"></div>
+  <p style="font-size:13px;color:#888;">数据来源：港股月度K线 · 2024年7月 — 2026年6月 · 单位：HKD</p>
+  <div class="metrics" style="margin-top:12px;">
+    <div class="metric-card"><div class="label">历史最高</div><div class="value">HKD 125.2</div><div class="sub">2025年3月</div></div>
+    <div class="metric-card"><div class="label">从最高点跌幅</div><div class="value negative">-76.5%</div><div class="sub">125 → 29 HKD</div></div>
+    <div class="metric-card"><div class="label">做空报告目标价</div><div class="value">35-40 HKD</div><div class="sub">2026年2月发布</div></div>
+    <div class="metric-card"><div class="label">当前价vs目标价</div><div class="value negative">已低于目标</div><div class="sub">跌穿做空目标</div></div>
+  </div>
+</div>
+
+<!-- The Core Story -->
+<div class="section">
+  <h2>🏢 公司全景图</h2>
+  <p><strong>达势股份</strong>是达美乐比萨在中国内地、香港和澳门地区的<strong>独家总特许经营商</strong>。2023年3月在港交所上市，代码01405.HK。CEO王怡（2017年加入，前麦当劳特许经营副总裁）带领公司从2017年约百余家门店发展到逾1,400家。</p>
+
+  <h3>商业模式解析</h3>
+  <p><strong>收入模式</strong>：100%自营门店 — 堂食 + 外送（一线城市外送占比76.2%）</p>
+  <p><strong>成本结构</strong>（占收入%）：</p>
+  <div id="costChart" class="chart-box"></div>
+
+  <h3>一句话本质</h3>
+  <p style="font-size:15px;font-weight:600;color:#1a73e8;padding:12px;background:#eef5ff;border-radius:8px;">
+    「买达势股份，本质上是买"中国比萨市场的渗透率提升 × 达美乐品牌的强运营能力"能否最终兑现为可持续的盈利增长。」
+  </p>
+</div>
+
+<!-- Growth & Financial Analysis -->
+<div class="section">
+  <h2>📋 财务全景分析</h2>
+
+  <h3>营收与利润趋势</h3>
+  <div id="revenueChart" class="chart-box"></div>
+
+  <h3>门店扩张与单店效率</h3>
+  <div id="storeChart" class="chart-box"></div>
+
+  <p style="font-size:13px;color:#666;margin-top:8px;">
+    <strong>🔑 关键发现：</strong> 营收增长主要由新店驱动(2025年+24.8%)，但<strong>同店销售转负(-1.5%)</strong>和<strong>单店日均销售下滑(-5.3%)</strong>表明老店经营承压。新店贡献增量但稀释了整体单店效率——这是一个"增店不增效"的典型扩张期特征。
+  </p>
+
+  <h3>收入来源结构（2025年）</h3>
+  <p>一线城市收入占比约41.2%，非一线城市占比58.8%（非一线城市收入同比+43.4%，成为主要增长引擎）。</p>
+  <p>外送占比持续提升：一线城市外送销售占比从2024年70.7%升至2025年76.2%，整体准时配送率维持在93%+。</p>
+
+  <h3>现金流分析</h3>
+  <div class="metrics">
+    <div class="metric-card"><div class="label">经营现金流(2025)</div><div class="value">RMB 8.9亿</div><div class="sub">同比+11.8%</div></div>
+    <div class="metric-card"><div class="label">资本开支(2025)</div><div class="value negative">RMB 5.06亿</div><div class="sub">占收入9.4%</div></div>
+    <div class="metric-card"><div class="label">自由现金流</div><div class="value neutral">~RMB 3.8亿</div><div class="sub">FCF转正但有限</div></div>
+    <div class="metric-card"><div class="label">单店开店成本</div><div class="value">~165万</div><div class="sub">含设备/装修/IT</div></div>
+  </div>
+</div>
+
+<!-- Competition & Industry -->
+<div class="section">
+  <h2>🏟️ 行业格局与竞争</h2>
+  <p>中国比萨市场约500亿元规模，行业增速放缓至约4-5%，进入存量竞争阶段。</p>
+  
+  <div class="metrics">
+    <div class="metric-card"><div class="label">必胜客</div><div class="value">~3,500家</div><div class="sub">市占率第一</div></div>
+    <div class="metric-card"><div class="label">尊宝比萨</div><div class="value">~2,800家</div><div class="sub">本土品牌，下沉能力强</div></div>
+    <div class="metric-card"><div class="label">达美乐(达势)</div><div class="value">~1,462家</div><div class="sub">市占率约10%</div></div>
+    <div class="metric-card"><div class="label">必胜客WOW</div><div class="value">平价店扩张中</div><div class="sub">50元以下品类竞争</div></div>
+  </div>
+
+  <p><strong>竞争态势：</strong> 必胜客推出平价乐享店(WOW)、核心品降价至50元以下；本土品牌性价比优势显著。美团/饿了么配送时效已接近30分钟，达美乐"30分钟必达"壁垒在弱化。行业价格战趋势明显。</p>
+
+  <h3>🔬 同店销售"失真"之谜</h3>
+  <p>同店销售下滑(-1.5%)并非完全反映老店经营恶化。这是因为：</p>
+  <ul>
+    <li><strong>新店爆发 → 高基数陷阱：</strong> 达美乐进入新城市时首店日均销售可达RMB 26,849元（相当亮眼），18个月后纳入"同店"统计时对比的是这个不可持续的爆发期高位。</li>
+    <li><strong>循环效应：</strong> 2025年新进21个城市，这些门店将在2026-2027年陆续进入同店统计池，届时可能再次拉低数据。</li>
+    <li>若将统计周期从18个月延长至24个月，"同店下滑"幅度会显著收窄。</li>
+  </ul>
+</div>
+
+<!-- Valuation -->
+<div class="section">
+  <h2>💰 估值分析</h2>
+
+  <h3>可比公司横向对比</h3>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>市场</th>
+        <th>P/S</th>
+        <th>净利率</th>
+        <th>门店模式</th>
+        <th>年增长</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong>达势股份</strong></td><td>中国</td>
+        <td><strong>0.75x</strong></td><td>2.6% / 3.5%</td><td>全部直营</td><td>+24.8%</td>
+      </tr>
+      <tr>
+        <td>Domino's US (DPZ)</td><td>美国</td>
+        <td>4.42x</td><td>~12.2%</td><td>总部+加盟</td><td>中个位数</td>
+      </tr>
+      <tr>
+        <td>Jubilant FoodWorks</td><td>印度</td>
+        <td>~2.9x</td><td>~4.7%</td><td>直营+加盟</td><td>~12%</td>
+      </tr>
+      <tr>
+        <td>Domino's Enterprises(DMP)</td><td>澳洲/欧洲</td>
+        <td>~0.66x</td><td>亏损</td><td>直营+加盟</td><td>负增长</td>
+      </tr>
+      <tr>
+        <td>百胜中国</td><td>中国</td>
+        <td>~1.8x</td><td>~8%</td><td>直营+加盟</td><td>~5%</td></tr>
+      <tr>
+        <td>DOM (UK)</td><td>英国</td>
+        <td>~0.55x</td><td>~2%</td><td>加盟为主</td><td>低个位数</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:#666;">⚠️ 注意：DPZ的P/S以总部收入为分母（不含加盟店销售额），与达势的直营收入口径不同，不宜直接对比。</p>
+
+  <h3>估值判断</h3>
+  <p>达势当前 <strong>0.75x P/S</strong> 横向看明显偏低——接近于DMP（已经亏损收缩的问题企业）的估值，远低于Jubilant（印度达美乐，净利率4.7%）的2.9x。市场给达势的定价，反映的是：</p>
+  <ul>
+    <li>⚠️ 对中国消费环境的悲观预期</li>
+    <li>⚠️ 同店销售负增长的担忧</li>
+    <li>⚠️ 净利率仅3.5%的盈利脆弱性</li>
+    <li>⚠️ 2027年特许经营权续约的不确定性</li>
+  </ul>
+  <p><strong>低P/S不是"便宜"的充分理由。</strong> 真正的估值修复需要证明：净利率能稳定爬升至5%以上，且同店销售恢复正增长。否则低P/S可能是"价值陷阱"的信号，而非入场时机。</p>
+
+  <h3>不同情景下的估值弹性</h3>
+  <div id="valuationChart" class="chart-box"></div>
+</div>
+
+<!-- Investment Thesis -->
+<div class="section">
+  <h2>🎯 核心投资逻辑</h2>
+
+  <div class="signal-box">
+    <div class="signal bull">
+      <h4 style="color:#e74c3c;">🐂 看多逻辑</h4>
+      <ol>
+        <li><strong>渗透率提升空间大：</strong> 中国比萨市场仍在成长阶段，人均消费量远低于美国，达美乐作为全球第一品牌有天然优势。</li>
+        <li><strong>新店回报优秀：</strong> 新市场门店日销RMB 26,849元，现金回收期约12个月，证明新店经济模型有效。</li>
+        <li><strong>P/S已跌至极低水平：</strong> 0.75x已充分定价了悲观预期，若环境改善重估空间大。</li>
+        <li><strong>利润率改善趋势仍在：</strong> 经调整净利率从3.0%升至3.5%，EBITDA率从11.5%升至11.8%。</li>
+        <li><strong>规模效应待释放：</strong> 开店到3,000家后，总部费用率理论上能明显下降。</li>
+      </ol>
+    </div>
+    <div class="signal bear">
+      <h4 style="color:#27ae60;">🐻 看空逻辑</h4>
+      <ol>
+        <li><strong>同店销售持续为负：</strong> 扩张稀释了单店效率，增长质量存疑。</li>
+        <li><strong>特许经营权2027年到期：</strong> 续约不确定性是悬在头上的达摩克利斯之剑。</li>
+        <li><strong>利润率天花板明确：</strong> 直营模型+高人工成本（34%+）限制净利率上限。</li>
+        <li><strong>竞争恶化：</strong> 必胜客价格下探、本土品牌崛起，"30分钟必达"壁垒弱化。</li>
+        <li><strong>管理层激励短期化：</strong> 薪酬与开店数量挂钩，与股东价值利益一致性存疑。</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>📌 市场共识 vs 预期差</h3>
+  <p><strong>市场已定价了什么：</strong></p>
+  <ul>
+    <li>中国消费疲软 + 餐饮行业面临压力 ✅</li>
+    <li>同店销售下滑是结构性问题，而非暂时波动 ✅</li>
+    <li>净利率短期内难以大幅改善 ✅</li>
+    <li>当前估值已接近"问题资产"定价区间 ✅</li>
+  </ul>
+  <p><strong>市场尚未充分定价什么（可能的预期差）：</strong></p>
+  <ul>
+    <li><strong>同店数据的"失真"可能被过度解读：</strong> 新店爆发期的统计扭曲使得实际老店经营状况可能并没有-1.5%那么差。</li>
+    <li><strong>续约可能并非"生死劫"：</strong> 达美乐品牌方在中国市场本身没有替代运营商选项，续约大概率能达成，只是费率可能调整。</li>
+    <li><strong>消费刺激政策若出台：</strong> 作为港股消费龙头之一，政策催化可能带来阶段性修复。</li>
+    <li><strong>估值已低于做空目标价：</strong> 连最悲观的空头都没想到股价能跌到30港元以下，过度下跌本身创造机会。</li>
+  </ul>
+</div>
+
+<!-- Key Risks Timeline -->
+<div class="section">
+  <h2>⚠️ 风险时间轴</h2>
+  <div class="metrics" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
+    <div class="metric-card" style="border-color:#e74c3c;">
+      <div class="label" style="color:#e74c3c;">🔴 2026年下半年</div>
+      <div class="value" style="font-size:16px;">同店销售持续恶化</div>
+      <div class="sub">Q2/Q3数据若继续转负，市场情绪可能进一步承压</div>
+    </div>
+    <div class="metric-card" style="border-color:#e74c3c;">
+      <div class="label" style="color:#e74c3c;">🔴 2026年</div>
+      <div class="value" style="font-size:16px;">开店质量下降风险</div>
+      <div class="sub">年开350家店目标下，单店质量能否保持？</div>
+    </div>
+    <div class="metric-card" style="border-color:#f39c12;">
+      <div class="label" style="color:#f39c12;">🟡 2027年</div>
+      <div class="value" style="font-size:16px;">特许经营权续约</div>
+      <div class="sub">最快2027年6月到期。续约费率和条款是关键变量</div>
+    </div>
+    <div class="metric-card" style="border-color:#f39c12;">
+      <div class="label" style="color:#f39c12;">🟡 持续</div>
+      <div class="value" style="font-size:16px;">消费环境/竞争</div>
+      <div class="sub">宏观经济疲软、必胜客降价竞争、外卖平台佣金压力</div>
+    </div>
+    <div class="metric-card" style="border-color:#155724;">
+      <div class="label" style="color:#155724;">🟢 持续观察</div>
+      <div class="value" style="font-size:16px;">管理层减持/期权行权</div>
+      <div class="sub">CEO获授购股权，可能带来稀释压力</div>
+    </div>
+    <div class="metric-card" style="border-color:#155724;">
+      <div class="label" style="color:#155724;">🟢 潜在的正面催化</div>
+      <div class="value" style="font-size:16px;">消费刺激政策/同店企稳</div>
+      <div class="sub">政府消费刺激、同店Q2改善信号、续约明朗化</div>
+    </div>
+  </div>
+</div>
+
+<!-- Conclusion -->
+<div class="section">
+  <h2>🏁 投资结论</h2>
+
+  <h3>短期视角（3-6个月）</h3>
+  <p><strong>审慎观望 / 不宜抄底。</strong> 股价虽已跌去76%，但驱动上涨的催化因素不足。同店销售数据、2027年续约谈判、中国消费数据，都需要时间验证。低P/S本身不是买入理由——餐饮股从低P/S继续往下走的例子不少（DMP从1.5x跌到0.6x）。</p>
+
+  <h3>中期视角（1-2年）</h3>
+  <p><strong>关注"净利率爬升"和"同店转正"两个验证点。</strong></p>
+  <p>如果以下条件开始兑现，当前估值将具有吸引力：</p>
+  <ul>
+    <li>2026年下半年同店销售企稳或转正</li>
+    <li>经调整净利率升至4%以上（反映门店成熟 + 总部费用摊薄）</li>
+    <li>特许经营权续约条款明朗化（2027年中前应有信号）</li>
+  </ul>
+  <p>届时P/S从0.75x向1.0-1.5x修复完全可期，对应30-50%的上行空间。但"等待验证"需要耐心，且消费复苏时间表不确定。</p>
+
+  <h3>一句话判断</h3>
+  <p style="font-size:15px;font-weight:600;padding:16px;background:#fff8e1;border-left:4px solid #f39c12;border-radius:6px;">
+    「达势股份当前股价已充分反映了悲观预期，但"便宜"不等于"会涨"。它是一个<strong>赔率不错但时机不确定</strong>的标的——更适合在关键样本数据（同店销售、续约进展）出现边际改善信号后介入，而非在此刻左侧抄底。」
+  </p>
+
+  <h3>关键关注信号（to check list）</h3>
+  <ul>
+    <li>✅ 2026年Q2经营数据：同店销售是否企稳</li>
+    <li>✅ 半年报(预计8月)：净利率能否继续改善</li>
+    <li>✅ 开店质量：新店日销是否能维持26,000+水平</li>
+    <li>✅ 特许经营权续约：是否有提前谈判信号</li>
+    <li>✅ 中国消费数据：社零增速、餐饮收入趋势</li>
+    <li>✅ 大股东/机构持仓变化</li>
+  </ul>
+</div>
+
+<!-- Disclaimer -->
+<div class="footer">
+  <p><strong>免责声明</strong></p>
+  <p>本文仅为基于公开数据的分析研究，不构成任何投资建议或买卖推荐。</p>
+  <p>数据来源：西米数据(westock-data)、雪球、经济观察网、百家号、港交所披露易、公司年报 · 数据截至2026年6月30日</p>
+  <p>投资有风险，入市需谨慎。本文观点可能存在偏误，读者应独立判断。</p>
+</div>
+
+</div>
+
+<script>
+// =============================
+// Chart 1: Stock Price History
+// =============================
+(function(){
+  var months = ['2024-07','2024-08','2024-09','2024-10','2024-11','2024-12',
+                '2025-01','2025-02','2025-03','2025-04','2025-05','2025-06',
+                '2025-07','2025-08','2025-09','2025-10','2025-11','2025-12',
+                '2026-01','2026-02','2026-03','2026-04','2026-05','2026-06'];
+  var prices = [64.5, 68.0, 78.4, 63.45, 77.95, 78.0,
+                79.3, 99.35, 98.55, 98.55, 95.0, 102.7,
+                85.0, 88.8, 87.0, 88.2, 76.5, 71.65,
+                66.45, 64.0, 47.8, 50.4, 38.68, 29.46];
+  var highs = [70.0, 70.0, 79.8, 80.5, 82.3, 91.6,
+               82.9, 99.65, 125.2, 108.0, 103.2, 107.3,
+               103.4, 90.05, 90.65, 92.0, 90.2, 82.9,
+               74.5, 69.95, 69.95, 52.9, 51.35, 40.32];
+  var lows = [64.25, 63.05, 62.0, 63.05, 62.15, 70.5,
+              69.7, 77.1, 95.1, 89.3, 92.35, 86.25,
+              84.0, 81.15, 81.2, 83.2, 72.6, 70.2,
+              65.1, 61.75, 47.46, 46.36, 37.02, 28.42];
+
+  var opt = {
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+    legend: { data: ['月收盘', '月最高', '月最低'], top: 5 },
+    grid: { left: '8%', right: '5%', top: '15%', bottom: '12%' },
+    xAxis: { type: 'category', data: months, axisLabel: { rotate: 45, fontSize: 11 } },
+    yAxis: { type: 'value', name: 'HKD', min: 0 },
+    series: [
+      { name: '月收盘', type: 'line', data: prices, 
+        lineStyle: { color: '#1a73e8', width: 2 },
+        itemStyle: { color: '#1a73e8' },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: 'rgba(26,115,232,0.2)' }, { offset: 1, color: 'rgba(26,115,232,0)' }] }},
+        markLine: { data: [{ yAxis: 29.46, name: '当前价', label: { formatter: '现价 29.46' }, lineStyle: { color: '#e74c3c', type: 'dashed' } }] }
+      },
+      { name: '月最高', type: 'line', data: highs, lineStyle: { color: '#e74c3c', width: 1, type: 'dotted' }, symbol: 'none' },
+      { name: '月最低', type: 'line', data: lows, lineStyle: { color: '#27ae60', width: 1, type: 'dotted' }, symbol: 'none' }
+    ]
+  };
+  echarts.init(document.getElementById('priceChart')).setOption(opt);
+})();
+
+// =============================
+// Chart 2: Cost Structure
+// =============================
+(function(){
+  echarts.init(document.getElementById('costChart')).setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+    series: [{
+      type: 'pie', radius: ['35%', '65%'],
+      center: ['50%', '50%'],
+      label: { formatter: '{b}\n{d}%', fontSize: 12 },
+      data: [
+        { name: '原材料', value: 27.3, itemStyle: { color: '#e74c3c' } },
+        { name: '员工薪酬', value: 34.0, itemStyle: { color: '#f39c12' } },
+        { name: '租赁相关', value: 11.0, itemStyle: { color: '#1a73e8' } },
+        { name: '折旧摊销', value: 7.0, itemStyle: { color: '#9b59b6' } },
+        { name: '广告/平台费', value: 8.0, itemStyle: { color: '#3498db' } },
+        { name: '其他成本', value: 7.0, itemStyle: { color: '#95a5a6' } },
+        { name: '营业利润', value: 5.0, itemStyle: { color: '#27ae60' } },
+        { name: '净利率', value: 0.7, itemStyle: { color: '#2ecc71' } }
+      ]
+    }]
+  });
+})();
+
+// =============================
+// Chart 3: Revenue & Profit Trend
+// =============================
+(function(){
+  var years = ['2020', '2021', '2022', '2023', '2024', '2025'];
+  var revenue = [10.4, 16.1, 20.4, 30.5, 43.1, 53.82];
+  var netProfit = [-2.74, -4.71, -2.23, -0.27, 0.55, 1.42];
+  
+  echarts.init(document.getElementById('revenueChart')).setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['营收(亿RMB)', '净利润(亿RMB)'], top: 5 },
+    grid: { left: '10%', right: '8%', top: '18%', bottom: '12%' },
+    xAxis: { type: 'category', data: years },
+    yAxis: [
+      { type: 'value', name: '营收(亿)' },
+      { type: 'value', name: '净利润(亿)', min: -6 }
+    ],
+    series: [
+      { name: '营收(亿RMB)', type: 'bar', data: revenue, 
+        itemStyle: { color: '#1a73e8' },
+        barMaxWidth: 40,
+        label: { show: true, position: 'top', formatter: '{c}', fontSize: 11 }
+      },
+      { name: '净利润(亿RMB)', type: 'line', yAxisIndex: 1, data: netProfit,
+        lineStyle: { color: '#e74c3c', width: 2 },
+        itemStyle: { color: '#e74c3c' },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: 'rgba(231,76,60,0.15)' }, { offset: 1, color: 'rgba(231,76,60,0)' }] }},
+        label: { show: true, position: 'bottom', formatter: function(p){return p.value.toFixed(2);}, fontSize: 11 }
+      }
+    ]
+  });
+})();
+
+// =============================
+// Chart 4: Store & Efficiency
+// =============================
+(function(){
+  var years = ['2020','2021','2022','2023','2024','2025','2026Q1'];
+  var stores = [268, 406, 588, 768, 1008, 1315, 1462];
+  var dailySales = [11000, 11500, 11900, 12400, 13126, 12428, 12000];
+
+  echarts.init(document.getElementById('storeChart')).setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['门店数', '单店日均销售(RMB)'], top: 5 },
+    grid: { left: '10%', right: '8%', top: '18%', bottom: '12%' },
+    xAxis: { type: 'category', data: years },
+    yAxis: [
+      { type: 'value', name: '门店数' },
+      { type: 'value', name: '单日销售(RMB)', min: 10000 }
+    ],
+    series: [
+      { name: '门店数', type: 'bar', data: stores, itemStyle: { color: '#1a73e8' }, barMaxWidth: 35 },
+      { name: '单店日均销售(RMB)', type: 'line', yAxisIndex: 1, data: dailySales,
+        lineStyle: { color: '#f39c12', width: 2 },
+        itemStyle: { color: '#f39c12' },
+        label: { show: true, formatter: '{c}', fontSize: 11 }
+      }
+    ]
+  });
+})();
+
+// =============================
+// Chart 5: Valuation Scenario
+// =============================
+(function(){
+  var scenarios = ['悲观\n(P/S 0.5x)', '当前\n(P/S 0.75x)', '保守\n(P/S 1.0x)', '中性\n(P/S 1.5x)', '乐观\n(P/S 2.5x)'];
+  var values = [19.5, 29.5, 39.0, 58.5, 97.5];
+  var colors = ['#27ae60', '#f39c12', '#1a73e8', '#e74c3c', '#c0392b'];
+
+  echarts.init(document.getElementById('valuationChart')).setOption({
+    tooltip: { trigger: 'axis', formatter: function(p){return p[0].name + '<br/>目标价: HKD ' + p[0].value.toFixed(1);} },
+    grid: { left: '10%', right: '5%', bottom: '15%' },
+    xAxis: { type: 'category', data: scenarios },
+    yAxis: { type: 'value', name: '对应股价(HKD)', min: 0 },
+    series: [{
+      type: 'bar', data: values.map(function(v,i){return {value:v,itemStyle:{color:colors[i]}};}),
+      barMaxWidth: 55,
+      label: { show: true, position: 'top', formatter: 'HKD {c}', fontSize: 12, fontWeight: 600 }
+    }]
+  });
+})();
+</script>
+
+</body>
+</html>
