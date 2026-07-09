@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>立讯精密（Luxshare Precision）研究报告</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2733; --sub:#5b6675;
+    --line:#e6e9ef; --brand:#c8102e; --brand2:#0a6ebd; --ok:#1a8f4c; --warn:#c8821a;
+    --chip:#eef2f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75;font-size:15.5px}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 22px 64px}
+  header.hero{background:linear-gradient(135deg,#c8102e,#9c0c24);color:#fff;border-radius:18px;padding:30px 30px 26px;box-shadow:0 8px 30px rgba(200,16,46,.18)}
+  header.hero .tag{display:inline-block;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:999px;font-size:12.5px;margin-bottom:12px}
+  header.hero h1{margin:0 0 6px;font-size:30px;letter-spacing:.5px}
+  header.hero .en{font-size:14px;opacity:.9;margin-bottom:14px}
+  header.hero .meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13.5px;opacity:.96}
+  header.hero .meta b{font-weight:600}
+  section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,50,.04)}
+  h2{font-size:20px;margin:0 0 14px;padding-left:12px;border-left:4px solid var(--brand);line-height:1.3}
+  h3{font-size:16.5px;margin:20px 0 8px;color:var(--brand2)}
+  p{margin:10px 0;color:var(--ink)}
+  .sub{color:var(--sub);font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .kpi{background:var(--chip);border-radius:12px;padding:14px 16px}
+  .kpi .t{font-size:13px;color:var(--sub)}
+  .kpi .v{font-size:22px;font-weight:700;margin:4px 0 2px}
+  .kpi .d{font-size:12.5px;color:var(--ok)}
+  .kpi .d.down{color:var(--warn)}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  .seg .box{border:1px solid var(--line);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+  .seg .box .pct{position:absolute;right:14px;top:12px;font-size:26px;font-weight:800;color:#d9dde4}
+  .seg .box.a{border-top:3px solid #c8102e}
+  .seg .box.b{border-top:3px solid #0a6ebd}
+  .seg .box.c{border-top:3px solid #1a8f4c}
+  .seg .box h4{margin:0 0 6px;font-size:15.5px}
+  .seg .box .num{font-size:18px;font-weight:700}
+  .seg .box p{font-size:13px;color:var(--sub);margin:6px 0 0}
+  .timeline{position:relative;margin-top:10px;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--brand),var(--brand2))}
+  .tl{position:relative;margin:0 0 18px}
+  .tl::before{content:"";position:absolute;left:-22px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--brand)}
+  .tl .yr{font-weight:700;color:var(--brand);font-size:14.5px}
+  .tl .ev{margin:2px 0 0}
+  .tl .ev b{color:var(--ink)}
+  .callout{background:#fff7f8;border:1px solid #f3d2d7;border-left:4px solid var(--brand);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14px}
+  .note{background:#f1f7ff;border:1px solid #cfe2fb;border-left:4px solid var(--brand2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14px}
+  ul.tight{margin:8px 0;padding-left:20px}
+  ul.tight li{margin:6px 0}
+  .founder{display:flex;gap:16px;align-items:flex-start}
+  .founder .badge{flex:0 0 92px;height:92px;border-radius:50%;background:linear-gradient(135deg,#c8102e,#9c0c24);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+  th{background:var(--chip);font-weight:600}
+  td.r,th.r{text-align:right}
+  footer{color:var(--sub);font-size:12.5px;text-align:center;margin-top:26px;line-height:1.7}
+  .pill{display:inline-block;background:var(--chip);border-radius:999px;padding:3px 11px;font-size:12.5px;margin:2px 4px 2px 0;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="tag">研究报告 · 截至 2026-07-09</span>
+    <h1>立讯精密</h1>
+    <div class="en">Luxshare Precision Industry Co., Ltd.　|　股票代码：002475.SZ / 今日登陆港交所（H股）</div>
+    <div class="meta">
+      <span><b>成立</b>　2004-05-24（广东东莞）</span>
+      <span><b>创始人</b>　王来春（董事长兼总经理）</span>
+      <span><b>定位</b>　全球精密智能制造（PIMS）龙头</span>
+      <span><b>A+H</b>　深交所 2010 + 港交所 2026</span>
+    </div>
+  </header>
+
+  <!-- 一句话介绍 -->
+  <section>
+    <h2>一、它是做什么的？一句话说清</h2>
+    <p>立讯精密是全球领先的<strong>精密智能制造解决方案（PIMS）提供商</strong>——简单说，就是给全球顶级科技和汽车品牌做"高难度、高精度的零部件 + 模组 + 整机代工"的工厂，而且是把研发、制造、自动化设备、零部件垂直整合到一起的"全能型代工巨头"。</p>
+    <p class="sub">它的客户几乎是消费电子与汽车界的"全明星阵容"：苹果（手机/手表/AirPods/连接线）、英伟达（AI 服务器连接器与线束）、以及奔驰、宝马、大众、通用等全球主流车企。据弗若斯特沙利文，按 2025 年收入计，它是<strong>中国大陆最大、全球第五大</strong>精密智造解决方案商；在消费电子零组件及模组领域<strong>全球第二、中国大陆第一</strong>（全球市占率约 11.2%）。</p>
+    <div class="callout">💡 <b>出身标签：</b>立讯精密常被叫做"果链一哥"——它是苹果产业链里体量最大、业务最全的中国大陆代工厂。但近年来它正主动"去苹果化"，把增长引擎切换到<strong>汽车电子</strong>和<strong>AI 数据中心</strong>两条新赛道。</div>
+  </section>
+
+  <!-- 三大业务 -->
+  <section>
+    <h2>二、三大业务板块（2025 年数据）</h2>
+    <p class="sub">2025 年全年营收约 <strong>3,281 亿元</strong>（多家媒体口径为"超 3,300 亿"），同比增长约 22%。业务结构如下：</p>
+    <div class="seg">
+      <div class="box a">
+        <div class="pct">79.5%</div>
+        <h4>消费电子</h4>
+        <div class="num">¥2,642.7 亿</div>
+        <p>手机/PC/手表/AirPods 的连接线、连接器、声学、结构件及整机组装。2025 年同比 +13.4%，仍是压舱石但占比逐年下降。</p>
+      </div>
+      <div class="box b">
+        <div class="pct">11.8%</div>
+        <h4>汽车电子</h4>
+        <div class="num">¥392.6 亿</div>
+        <p>汽车线束、连接器、智能座舱/底盘域控等。2025 年同比 <b>+185.3%</b>（含莱尼并表），是增速最快的引擎。</p>
+      </div>
+      <div class="box c">
+        <div class="pct">7.4%</div>
+        <h4>通信及数据中心</h4>
+        <div class="num">¥245.7 亿</div>
+        <p>高速连接器、铜缆/光模块、散热等，深度绑定英伟达等 AI 算力产业链。2025 年同比 +33.8%。</p>
+      </div>
+    </div>
+    <div class="note">📌 关键变化：2025 年<strong>汽车 + 通信业务合计营收占比首次突破 20%</strong>（约 19.2%），第一大客户（苹果）营收占比降至约 <strong>57%</strong>，"消费电子 + 汽车 + 数据中心"三轮驱动格局正在形成。</div>
+    <h3>业务到底"造什么"——产品举例</h3>
+    <ul class="tight">
+      <li><b>连接器 / 连接线：</b>起家业务，覆盖消费电子、通信、汽车、工业等场景，是全球连接器头部供应商。</li>
+      <li><b>消费电子模组与整机：</b>AirPods 整机代工核心供应商、Apple Watch 无线充电/表带、iPhone 转接头、iPad 内部线、MacBook 电源线，以及 iPhone 整机组装。</li>
+      <li><b>声学：</b>通过收购美律/美特切入，做扬声器、受话器等声学模组。</li>
+      <li><b>汽车：</b>汽车线束总成、高压线束、连接器、智能座舱域控制器、后轮转向控制单元等。</li>
+      <li><b>AI 算力：</b>服务器用高速连接器、铜连接线缆、光模块、散热器件，服务英伟达 GB200/GB300 等 AI 机柜供应链。</li>
+    </ul>
+  </section>
+
+  <!-- 发展历程 -->
+  <section>
+    <h2>三、发展历程（时间线）</h2>
+    <div class="timeline">
+      <div class="tl"><div class="yr">1988</div><div class="ev"><b>创始人的起点：</b>20 岁的王来春（广东汕头澄海人）进入深圳富士康（鸿海）旗下工厂打工，从基层做起，一干十年，做到"科长"——工人的天花板，深受郭台铭赏识。这段经历是立讯日后"代工基因"的来源。</div></div>
+      <div class="tl"><div class="yr">1998–1999</div><div class="ev"><b>离职创业：</b>王来春离开富士康，与兄长王来胜等家族成员一起下海，从事电子连接器相关的代工贸易，积累原始资本与客户。</div></div>
+      <div class="tl"><div class="yr">2004-05-24</div><div class="ev"><b>立讯精密成立：</b>在深圳宝安登记注册（后总部迁至广东东莞清溪镇），主营连接线、连接器、电脑周边设备等。初期主要做 PC 连接器代工。</div></div>
+      <div class="tl"><div class="yr">2005</div><div class="ev"><b>产能布局：</b>设立江西吉安协讯电子等生产基地，向内陆扩张制造能力。</div></div>
+      <div class="tl"><div class="yr">2010-09-15</div><div class="ev"><b>深交所上市：</b>登陆中小板，股票代码 002475，上市时年营收约 25 亿元，是一家"连接器小厂"。</div></div>
+      <div class="tl"><div class="yr">2011-05</div><div class="ev"><b>切入苹果链（关键一跃）：</b>以约 11.8 亿元收购<strong>昆山联滔电子</strong>100% 股权，拿到 iPad 内部连接线等订单，正式进入苹果供应链，并陆续获得 MacBook 电源线、Apple Watch 无线充电、Type-C 转接头等。</div></div>
+      <div class="tl"><div class="yr">2014-03</div><div class="ev"><b>补键盘/按键：</b>6000 万元收购丰岛电子，扩展键盘、按键类产品。</div></div>
+      <div class="tl"><div class="yr">2016–2017</div><div class="ev"><b>拿下 AirPods：</b>收购美特科技、美律电子（苏州/惠州/上海）资产，切入声学领域，并成为 <strong>AirPods 整机核心组装商</strong>。团队短时间内架线并实现百万台出货，展现"立讯速度"。</div></div>
+      <div class="tl"><div class="yr">2020</div><div class="ev"><b>进军 iPhone 整机：</b>与控股股东共同出资收购纬创资通旗下江苏纬创、昆山纬新，成功切入 iPhone 整机组装，从"零件/模组"升级到"整机制造"。同年还收购日铠电脑（铠胜）拓展金属结构件。</div></div>
+      <div class="tl"><div class="yr">2021–2023</div><div class="ev"><b>横向扩张 + 汽车起步：</b>持续拿下苹果更多整机与模组订单；同时通过自研与并购切入汽车电子（连接器、线束、智能座舱），开启"第二曲线"。</div></div>
+      <div class="tl"><div class="yr">2024-09</div><div class="ev"><b>锁定德国莱尼：</b>公告拟以约 41 亿元收购德国百年汽车线束巨头 <strong>Leoni AG</strong> 50.1% 股权及其全资子公司 Leoni K 100% 股权，剑指全球车企供应链。</div></div>
+      <div class="tl"><div class="yr">2025-07</div><div class="ev"><b>莱尼交割完成：</b>收购正式落地，立讯借莱尼（全球 21 国、约 8 万员工）的东欧/北非/北美产能与高压线束、域控技术，补齐高端汽车电子短板，汽车出海提速。</div></div>
+      <div class="tl"><div class="yr">2025 全年</div><div class="ev"><b>业绩新高：</b>营收约 3,281 亿元；汽车电子同比 +185%、通信及数据中心同比 +34%；研发投入约 114 亿元（占营收 3.44%）。</div></div>
+      <div class="tl"><div class="yr">2026-04</div><div class="ev"><b>增持莱尼：</b>再从原股东处收购 24.8% 股份，对莱尼持股升至近 75%，进一步控股。</div></div>
+      <div class="tl"><div class="yr">2026-05</div><div class="ev"><b>千亿女首富：</b>A 股市值创历史新高突破 5,500 亿元，王来春个人身价破千亿，成为国内白手起家女首富。</div></div>
+      <div class="tl" style="border:none"><div class="yr" style="color:var(--brand)">2026-07-09 ★ 今天</div><div class="ev"><b>登陆港交所：</b>发行 3.835 亿股 H 股，定价 <strong>63.28 港元/股</strong>（顶格定价），募资 <strong>242.36 亿港元</strong>，为<strong>2026 年港交所最大 IPO</strong>、近两年第三大（仅次于宁德时代、紫金黄金国际），实现 A+H 双重上市。</div></div>
+    </div>
+  </section>
+
+  <!-- 创始人 -->
+  <section>
+    <h2>四、创始人：王来春的"打工妹到千亿掌门"</h2>
+    <div class="founder">
+      <div class="badge">王</div>
+      <div>
+        <p style="margin-top:4px">王来春，1967 年生，广东汕头澄海人，清华大学深圳研究生院 EMBA，第十四届全国政协委员，立讯精密董事长兼总经理。</p>
+        <ul class="tight">
+          <li><b>草根逆袭：</b>1988 年以普通工人身份进入富士康，是郭台铭最早的员工之一，十年做到科长。</li>
+          <li><b>家族共治：</b>与兄长王来胜等四兄妹共同控制立讯，"兄妹共治、分业布局"，家族深度参与经营。</li>
+          <li><b>管理哲学：</b>把富士康的纪律文化与自主研发、垂直整合结合，形成立讯"并购 + 自研 + 扩产"的扩张打法。</li>
+          <li><b>时代意义：</b>从"富士康打工妹"到执掌数千亿市值企业、登顶白手起家女首富，被视为中国制造业崛起的缩影。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关键数据 -->
+  <section>
+    <h2>五、关键经营数据速览</h2>
+    <table>
+      <tr><th>指标</th><th class="r">数值</th><th>说明</th></tr>
+      <tr><td>2025 全年营收</td><td class="r">约 3,281 亿元</td><td>同比约 +22%；较 2010 上市时 25 亿约翻 130 倍</td></tr>
+      <tr><td>2025 归母净利润</td><td class="r">约 133 亿元（2024）</td><td>2024 净利同比 +22%；2025 维持高增</td></tr>
+      <tr><td>2025 毛利率</td><td class="r">11.9%</td><td>同比提升约 1.5 个百分点</td></tr>
+      <tr><td>2025 研发投入</td><td class="r">约 114 亿元</td><td>占营收 3.44%</td></tr>
+      <tr><td>港股募资（2026-07-09）</td><td class="r">242.36 亿港元</td><td>今年港交所最大 IPO，发行价 63.28 港元</td></tr>
+      <tr><td>A 股市值（2026-05 峰值）</td><td class="r">超 5,500 亿元</td><td>王来春身价破千亿</td></tr>
+      <tr><td>第一大客户依赖度</td><td class="r">约 57%</td><td>苹果占比，较此前高位明显下降</td></tr>
+      <tr><td>全球行业排名</td><td class="r">第 5 / 第 1</td><td>全球第五大、中国大陆最大 PIMS 提供商</td></tr>
+    </table>
+    <p class="sub">注：部分口径来自 2025 年年报及公开报道整理，细分板块营收按三大主营业务占比还原，合计约 3,281 亿元。</p>
+  </section>
+
+  <!-- 风险与看点 -->
+  <section>
+    <h2>六、值得关注的看点与挑战</h2>
+    <h3>核心看点</h3>
+    <ul class="tight">
+      <li><b>"果链"基本盘稳：</b>苹果全系列终端的零部件与整机组装需求稳定，仍是现金流压舱石。</li>
+      <li><b>汽车电子放量：</b>莱尼并表 + 自研域控，目标 2027 年汽车营收占比提升至 18% 以上。</li>
+      <li><b>AI 算力红利：</b>通信及数据中心业务绑定英伟达 AI 服务器供应链，高增长持续。</li>
+      <li><b>A+H 融资通道：</b>港股上市打开国际资本与全球并购空间，助力"去苹果化"与出海。</li>
+    </ul>
+    <h3>主要挑战</h3>
+    <ul class="tight">
+      <li><b>客户集中：</b>虽在下降，苹果仍贡献过半营收，谈判与订单波动影响大。</li>
+      <li><b>负债水平：</b>总负债超 2,000 亿元，大规模并购（如莱尼）推高财务杠杆。</li>
+      <li><b>成本与贸易：</b>上游大宗商品涨价、全球贸易与地缘不确定性带来压力。</li>
+      <li><b>整合风险：</b>密集跨境并购后的文化与管理整合是长期考验。</li>
+    </ul>
+  </section>
+
+  <footer>
+    本报告由公开资料（百度百科、东方财富、企查查、腾讯新闻、年报等）整理，数据截至 2026-07-09，仅供研究参考，不构成投资建议。<br>
+    如需 Word / PDF 版本，或想深入某一板块（如汽车电子、AI 算力业务）可继续告诉我。
+  </footer>
+
+</div>
+</body>
+</html>
