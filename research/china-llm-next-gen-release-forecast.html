@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国内头部大模型下一代发布时间预测</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa; color: #1f2937; padding: 0; line-height: 1.65;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 20px; }
+  header { text-align: center; margin-bottom: 32px; }
+  header h1 { font-size: 25px; font-weight: 700; color: #111827; }
+  header p { color: #6b7280; font-size: 14px; margin-top: 8px; }
+  .today-badge { display:inline-block; margin-top:14px; padding:6px 16px; background:#eef2ff; color:#4f46e5; border-radius:20px; font-size:13px; font-weight:600; }
+  .card { background:#fff; border-radius:16px; padding:26px 30px; box-shadow:0 4px 20px rgba(0,0,0,.05); margin-bottom:22px; }
+  .card h2 { font-size:16px; color:#374151; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .card h2 .dot { width:8px; height:8px; border-radius:50%; background:#6366f1; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  th, td { padding:12px 10px; text-align:left; border-bottom:1px solid #f1f3f5; }
+  thead th { background:#f9fafb; color:#6b7280; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+  tbody tr:last-child td { border-bottom:none; }
+  .co { font-weight:700; color:#111827; }
+  .model { color:#374151; font-weight:500; }
+  .pred { color:#4f46e5; font-weight:700; }
+  .conf { font-size:11px; padding:2px 8px; border-radius:10px; font-weight:600; }
+  .c-high { background:#dcfce7; color:#15803d; }
+  .c-mid { background:#fef9c3; color:#a16207; }
+  .c-low { background:#fee2e2; color:#b91c1c; }
+  .note { font-size:12.5px; color:#9ca3af; }
+
+  /* Timeline */
+  .tl { position:relative; margin-top:6px; }
+  .tl-axis { position:relative; height:22px; border-bottom:1px solid #e5e7eb; margin-bottom:4px; }
+  .tl-month { position:absolute; top:0; transform:translateX(-50%); font-size:11px; color:#9ca3af; }
+  .tl-row { position:relative; height:46px; border-bottom:1px dashed #f1f3f5; }
+  .tl-label { position:absolute; left:0; top:14px; width:84px; font-size:13px; font-weight:700; color:#374151; z-index:3; background:#fff; }
+  .tl-track { position:absolute; left:92px; right:0; top:0; height:46px; }
+  .m { position:absolute; top:14px; width:14px; height:14px; border-radius:50%; transform:translate(-50%,0); border:2px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.08); }
+  .m.real { background:#6366f1; }
+  .m.past { background:#c7d2fe; }
+  .m.pred { background:#fff; border:2px dashed #ec4899; box-shadow:none; }
+  .m-label { position:absolute; top:-2px; transform:translateX(-50%); font-size:10px; color:#6b7280; white-space:nowrap; }
+  .today-line { position:absolute; top:-4px; bottom:-4px; width:2px; background:#ef4444; opacity:.55; z-index:4; }
+  .today-flag { position:absolute; top:-18px; transform:translateX(-50%); font-size:10px; color:#ef4444; font-weight:700; white-space:nowrap; }
+
+  .why { font-size:13.5px; color:#374151; }
+  .why .item { padding:14px 0; border-bottom:1px solid #f1f3f5; }
+  .why .item:last-child { border-bottom:none; }
+  .why .item b { color:#111827; }
+  .why .tag { display:inline-block; font-size:11px; padding:1px 7px; border-radius:4px; background:#eef2ff; color:#4f46e5; margin-right:6px; font-weight:600; }
+  .ind { font-size:13.5px; color:#374151; }
+  .ind li { margin:8px 0 8px 18px; }
+  footer { text-align:center; color:#9ca3af; font-size:12px; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>国内头部大模型：下一代发布时间预测</h1>
+    <p>基于各家 2026 年真实迭代周期外推，并说明节奏背后的"为什么"</p>
+    <span class="today-badge">当前日期：2026-07-13（周一）</span>
+  </header>
+
+  <!-- 方法论 -->
+  <div class="card">
+    <h2><span class="dot"></span>预测方法</h2>
+    <p class="note" style="font-size:13px; color:#6b7280; line-height:1.8;">
+      核心假设：<b style="color:#374151;">在研发组织与战略不变的前提下，下一代发布时间 ≈ 当前代发布日 + 最近两代的平均间隔</b>。
+      间隔取自各企业 2026 年官方公告（见下表"依据"列）。预测日为模型外推点，实际可能受战略调整、技术突破或竞争事件影响而提前/延后。
+      置信度越高 = 历史节奏越稳定 + 外部信号越明确。
+    </p>
+  </div>
+
+  <!-- 预测总表 -->
+  <div class="card">
+    <h2><span class="dot"></span>预测结果一览</h2>
+    <table>
+      <thead>
+        <tr><th>企业</th><th>当前代（发布日）</th><th>近期节奏</th><th>预测下一代</th><th>预测发布日</th><th>距今天数</th><th>置信度</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="co">智谱</td><td class="model">GLM-5.2（6/17）</td><td class="note">≈70天/代</td><td class="pred">GLM-5.3</td><td>2026-08-26</td><td class="note">约 44 天</td><td><span class="conf c-high">高</span></td></tr>
+        <tr><td class="co">MiniMax</td><td class="model">M3（6/1）</td><td class="note">≈75天/代</td><td class="pred">M3.x / 2.7万亿旗舰</td><td>2026-08-15（Q3内）</td><td class="note">约 33 天</td><td><span class="conf c-high">高</span></td></tr>
+        <tr><td class="co">阿里</td><td class="model">Qwen3.7-Max（5/20）</td><td class="note">≈46天/代</td><td class="pred">Qwen3.8 / Qwen4</td><td>2026-07 内或 8 月初</td><td class="note">已"到点"</td><td><span class="conf c-high">高</span></td></tr>
+        <tr><td class="co">小米</td><td class="model">MiMo-V2.5（4/23）</td><td class="note">跨代≈3-4月</td><td class="pred">MiMo-V3 / V2.7</td><td>2026-09-10 前后</td><td class="note">约 59 天</td><td><span class="conf c-mid">中</span></td></tr>
+        <tr><td class="co">字节</td><td class="model">豆包 2.1 Pro（6/23）</td><td class="note">≈129天/大版本</td><td class="pred">豆包 2.2 / 3.0</td><td>2026-10-30 前后</td><td class="note">约 109 天</td><td><span class="conf c-mid">中</span></td></tr>
+        <tr><td class="co">腾讯</td><td class="model">Hy3 正式版（7/6）</td><td class="note">重建后≈3-4月</td><td class="pred">Hy3.x / Hy4</td><td>2026-11-03 前后</td><td class="note">约 113 天</td><td><span class="conf c-low">中低</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 时间轴 -->
+  <div class="card">
+    <h2><span class="dot"></span>发布节奏时间轴（2026-02 → 2026-12）</h2>
+    <div class="tl">
+      <div class="tl-axis">
+        <span class="tl-month" style="left:0%">2月</span>
+        <span class="tl-month" style="left:9.3%">3月</span>
+        <span class="tl-month" style="left:19.5%">4月</span>
+        <span class="tl-month" style="left:29.6%">5月</span>
+        <span class="tl-month" style="left:39.5%">6月</span>
+        <span class="tl-month" style="left:49.4%">7月</span>
+        <span class="tl-month" style="left:59.6%">8月</span>
+        <span class="tl-month" style="left:69.8%">9月</span>
+        <span class="tl-month" style="left:79.6%">10月</span>
+        <span class="tl-month" style="left:89.8%">11月</span>
+        <span class="tl-month" style="left:100%">12月</span>
+      </div>
+
+      <!-- 智谱 -->
+      <div class="tl-row">
+        <div class="tl-label">智谱</div>
+        <div class="tl-track">
+          <div class="m past" style="left:19.8%"></div>
+          <div class="m real" style="left:40.7%"></div>
+          <div class="m pred" style="left:61.7%"></div>
+          <div class="m-label" style="left:40.7%">5.2·6/17</div>
+          <div class="m-label" style="left:61.7%; color:#ec4899;">5.3·8/26</div>
+        </div>
+      </div>
+      <!-- MiniMax -->
+      <div class="tl-row">
+        <div class="tl-label">MiniMax</div>
+        <div class="tl-track">
+          <div class="m past" style="left:13.5%"></div>
+          <div class="m real" style="left:35.9%"></div>
+          <div class="m pred" style="left:58.4%"></div>
+          <div class="m-label" style="left:35.9%">M3·6/1</div>
+          <div class="m-label" style="left:58.4%; color:#ec4899;">M4·8/15</div>
+        </div>
+      </div>
+      <!-- 阿里 -->
+      <div class="tl-row">
+        <div class="tl-label">阿里</div>
+        <div class="tl-track">
+          <div class="m past" style="left:18.0%"></div>
+          <div class="m real" style="left:32.3%"></div>
+          <div class="m pred" style="left:46.1%"></div>
+          <div class="m-label" style="left:32.3%">3.7·5/20</div>
+          <div class="m-label" style="left:46.1%; color:#ec4899;">3.8·7/5</div>
+        </div>
+      </div>
+      <!-- 小米 -->
+      <div class="tl-row">
+        <div class="tl-label">小米</div>
+        <div class="tl-track">
+          <div class="m past" style="left:13.8%"></div>
+          <div class="m real" style="left:24.3%"></div>
+          <div class="m pred" style="left:66.2%"></div>
+          <div class="m-label" style="left:24.3%">V2.5·4/23</div>
+          <div class="m-label" style="left:66.2%; color:#ec4899;">V3·9/10</div>
+        </div>
+      </div>
+      <!-- 字节 -->
+      <div class="tl-row">
+        <div class="tl-label">字节</div>
+        <div class="tl-track">
+          <div class="m past" style="left:3.9%"></div>
+          <div class="m real" style="left:42.5%"></div>
+          <div class="m pred" style="left:81.1%"></div>
+          <div class="m-label" style="left:42.5%">2.1·6/23</div>
+          <div class="m-label" style="left:81.1%; color:#ec4899;">2.2·10/30</div>
+        </div>
+      </div>
+      <!-- 腾讯 -->
+      <div class="tl-row">
+        <div class="tl-label">腾讯</div>
+        <div class="tl-track">
+          <div class="m past" style="left:24.3%"></div>
+          <div class="m real" style="left:46.4%"></div>
+          <div class="m pred" style="left:82.3%"></div>
+          <div class="m-label" style="left:46.4%">Hy3·7/6</div>
+          <div class="m-label" style="left:82.3%; color:#ec4899;">Hy4·11/3</div>
+        </div>
+      </div>
+
+      <!-- 今天线 -->
+      <div class="today-line" style="left:calc(92px + (100% - 92px) * 0.485);"></div>
+      <div class="today-flag" style="left:calc(92px + (100% - 92px) * 0.485);">今天 7/13</div>
+    </div>
+    <p class="note" style="margin-top:10px;">● 实心蓝点 = 已发布 ｜ ○ 虚线粉圈 = 预测发布 ｜ 浅蓝点 = 上一代（参考）</p>
+  </div>
+
+  <!-- 为什么 -->
+  <div class="card">
+    <h2><span class="dot"></span>每家为什么是这个时间</h2>
+    <div class="why">
+      <div class="item">
+        <span class="tag">智谱 · 高置信</span><b>GLM-5.3 ≈ 8/26。</b>
+        GLM-5(2月)→5.1(4/8)→5.2(6/17) 稳定约 2 个月一代，是六家里节奏最可预测的一家。上市（02513.HK）后有持续迭代的资本叙事压力；5.2 已打出"开源 SOTA、与 Claude 差距收窄至 1-4%"的标签，5.3 大概率延续 MoE + 1M 上下文 + Coding/Agent 路线，不会出现长空窗。
+      </div>
+      <div class="item">
+        <span class="tag">MiniMax · 高置信</span><b>M3.x / 2.7万亿旗舰 ≈ 8/15（Q3 内）。</b>
+        M2.7(3/18)→M3(6/1)≈75天。关键外部信号：知情人士透露 MiniMax 正研发参数量 2.7万亿 的全新大模型，最快 Q3 发布且继续开源——这比自然迭代的 M3.x 更可能是"下一个大事件"。M3 刚建立"国内首个齐备 Coding+1M+原生多模态"认知，趁热打铁概率高。
+      </div>
+      <div class="item">
+        <span class="tag">阿里 · 高置信·随时</span><b>Qwen3.8 / Qwen4 已"到点"。</b>
+        3.5(2/16)→3.6(4/2)→3.7(5/20) 平均 46 天一代，按此推算下一代应在 7/5——也就是<b>目前已到节奏点</b>。截至今天(7/13)尚未发，说明要么正处于发布窗口（随时官宣），要么在 3.7 后做 consolidation 准备 Qwen4 代际跃迁。ATH 事业群成立后"不到一个半月演进一版"，组织效率极高，7 月下旬–8 月落地的可能性最大。
+      </div>
+      <div class="item">
+        <span class="tag">小米 · 中置信</span><b>MiMo-V3 / V2.7 ≈ 9/10。</b>
+        V2(3/19)→V2.5(4/23)仅 36 天，是迭代最快的；但那是小跨代，真正下一代需 3-4 个月。官方已明确"下一代在训练中，更深推理、更紧工具集成、更丰富真实世界 grounding"。小米把模型当"人车家全生态"底座，节奏受生态落地牵引；V2.5 仍是国内开源前列（Artificial Analysis 54 分并列第一），有底气用约 3 个月打磨 V3。
+      </div>
+      <div class="item">
+        <span class="tag">字节 · 中置信</span><b>豆包 2.2 / 3.0 ≈ 10/30。</b>
+        2.0(2/14)→2.1(6/23)≈129天，是六家里大版本间隔最长的一家。但字节用 "Evolving" 滚动更新机制补位（每月 2-4 次小版本），用户体感并不慢。打法是"底座稳、上层快"，靠 7亿+ 终端与 TRAE/扣子/豆包 App 的真实流量快速反馈，不急于每月大版本；2.2 或 3.0 大概率 10 月底–11 月。
+      </div>
+      <div class="item">
+        <span class="tag">腾讯 · 中低置信</span><b>Hy3.x / Hy4 ≈ 11/3。</b>
+        Hy3 是重建后首个正式版（preview 4/23 → 正式 7/6），属"重启"而非稳定迭代，故节奏最难预测。预测偏靠后（约 4 个月）的原因：刚发正式版 7 天，且跨代大版本需更长后训练与数据周期；更可能先出 Hy3.x（think 模式增强、多模态），再出 Hy4。腾讯打法是"用真实业务反哺"（WorkBuddy/元宝/ima 海量场景），不是单纯刷榜，节奏偏稳健；Apache 2.0 开源后也需生态沉淀期。
+      </div>
+    </div>
+  </div>
+
+  <!-- 行业层面 -->
+  <div class="card">
+    <h2><span class="dot"></span>为什么整体节奏在加速（行业底层逻辑）</h2>
+    <ul class="ind">
+      <li><b>范式转移：</b>从"对齐人类偏好"转向"对齐任务目标"——竞争焦点变成 Agent 执行力、长上下文、原生多模态、Coding。这些能力迭代周期短、可量化，逼着大家快发。</li>
+      <li><b>中美前沿压力：</b>GPT-5.x / Claude Opus 4.x / Gemini 3.x 持续施压，国产模型用"快速小步快跑 + 开源"抢生态与时间窗。</li>
+      <li><b>开源成标配（MIT / Apache 2.0）：</b>发布与获客成本下降，倒逼闭源厂商也加快节奏，形成"发布即竞争"的正反馈。</li>
+      <li><b>真实业务反哺闭环：</b>腾讯/字节/阿里把模型塞进亿级用户产品，用真实 feedback 做后训练，大幅缩短"发布→再训练"周期。</li>
+      <li><b>资本与组织驱动：</b>智谱上市、阿里 ATH 事业群、腾讯重建混元、MiniMax 冲刺超大模型——组织与资本双重加速。</li>
+    </ul>
+  </div>
+
+  <footer>预测基于 2026 年公开迭代数据外推，仅供参考；实际发布受技术突破、竞争与战略调整影响。数据截至 2026-07-13。</footer>
+</div>
+</body>
+</html>
