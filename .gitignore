@@ -1,2 +1,5 @@
 .wrangler/
 .DS_Store
+
+# Claude Code 本地指令，仅本地保留，不入仓库
+CLAUDE.md
